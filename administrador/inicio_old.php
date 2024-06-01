@@ -1,3 +1,14 @@
+<?php 
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location:../index.php");
+} else {
+    if ($_SESSION['usuario'] == "OK") {
+        $nombreUsuario = $_SESSION["nombreUsuario"];
+    }
+}
+?>
+
 <!doctype html>
 <html lang="es">
 <head>
@@ -18,6 +29,24 @@
         }
         .navbar-custom .nav-link:hover {
             color: #d4b6ff;
+        }
+        .dropdown-menu {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container-custom {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .card-custom {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .logout-overlay {
             position: fixed;
@@ -41,15 +70,7 @@
 </head>
 <body>
 
-<?php
-session_start();
-if (!isset($_SESSION['usuario'])) {
-    header("Location: ../index.php");
-    exit;
-}
-
-$url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
-?>
+<?php $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb" ?>
 
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="#">Administrador</a>
@@ -80,6 +101,56 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
         </ul>
     </div>
 </nav>
+
+<div class="container container-custom">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mt-4">Bienvenido, <?php echo $nombreUsuario; ?></h1>
+            <p class="lead">Esta es la sección de administración de la biblioteca. Aquí puedes gestionar los libros, usuarios, reportes y estadísticas del sitio web.</p>
+            <hr>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-custom mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Gestionar Libros</h5>
+                    <p class="card-text">Añade, edita o elimina libros de la biblioteca.</p>
+                    <a href="<?php echo $url; ?>/administrador/seccion/productos.php" class="btn btn-primary">Ir a Libros</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-custom mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Usuarios</h5>
+                    <p class="card-text">Gestiona los usuarios registrados en el sitio web.</p>
+                    <a href="#" class="btn btn-primary">Ir a Usuarios</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-custom mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Reportes</h5>
+                    <p class="card-text">Visualiza y genera reportes detallados.</p>
+                    <a href="#" class="btn btn-primary">Ir a Reportes</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-custom mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Estadísticas</h5>
+                    <p class="card-text">Consulta las estadísticas del sitio web.</p>
+                    <a href="#" class="btn btn-primary">Ir a Estadísticas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="logout-overlay" id="logout-overlay">
     <div class="logout-content">

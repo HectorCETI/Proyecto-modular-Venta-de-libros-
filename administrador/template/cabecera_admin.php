@@ -24,15 +24,20 @@ if (!isset($_SESSION['usuario'])) {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-        .navbar-custom {
-            background-color: #6f42c1;
+        .navbar-admin {
+            background-color: #2c3e50;
         }
-        .navbar-custom .navbar-brand,
-        .navbar-custom .nav-link {
-            color: #fff;
+        .navbar-admin .navbar-brand,
+        .navbar-admin .nav-link {
+            color: #ecf0f1;
         }
-        .navbar-custom .nav-link:hover {
-            color: #d4b6ff;
+        .navbar-admin .nav-link:hover {
+            color: #bdc3c7;
+        }
+        .navbar-brand-admin {
+            font-weight: bold;
+            color: #f39c12;
+            font-size: 1.5rem;
         }
         .dropdown-menu {
             animation: fadeIn 0.5s;
@@ -40,17 +45,6 @@ if (!isset($_SESSION['usuario'])) {
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
-        }
-        .container-custom {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .card-custom {
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .logout-overlay {
             position: fixed;
@@ -70,14 +64,21 @@ if (!isset($_SESSION['usuario'])) {
             border-radius: 5px;
             text-align: center;
         }
+        body {
+            background-color: #e9ecef; /* Fondo gris claro para todo el cuerpo */
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>
 
 <?php $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb" ?>
 
-<nav class="navbar navbar-expand-lg navbar-custom">
-    <a class="navbar-brand" href="#">Administrador</a>
+<nav class="navbar navbar-expand-lg navbar-admin">
+    <a class="navbar-brand navbar-brand-admin" href="#">Administrador</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -87,7 +88,7 @@ if (!isset($_SESSION['usuario'])) {
                 <a class="nav-link" href="<?php echo $url; ?>/administrador/inicio.php">Inicio</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo $url; ?>/administrador/seccion/productos.php">Libros</a>
+                <a class="nav-link" href="<?php echo $url; ?>/administrador/seccion/productos.php">Galería de Libros</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -96,7 +97,6 @@ if (!isset($_SESSION['usuario'])) {
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Usuarios</a>
                     <a class="dropdown-item" href="#">Reportes</a>
-                    <a class="dropdown-item" href="#">Estadísticas</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -114,13 +114,12 @@ if (!isset($_SESSION['usuario'])) {
     </div>
 </div>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGaS3ukQmTktG8f5DpiUibVx3" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIyFEYeDjAxZw8++PpRtW0uChFfYCAaMSFZcUOLO" crossorigin="anonymous"></script>
 <script>
-    document.getElementById('logout-link').addEventListener('click', function() {
+    document.getElementById('logout-link').addEventListener('click', function(event) {
+        event.preventDefault();
         document.getElementById('logout-overlay').style.display = 'flex';
     });
 
@@ -135,6 +134,5 @@ if (!isset($_SESSION['usuario'])) {
         document.getElementById('logout-overlay').style.display = 'none';
     });
 </script>
-
 </body>
 </html>
