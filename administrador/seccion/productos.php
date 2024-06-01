@@ -17,6 +17,7 @@ $txtImagen = (isset($_FILES['txtImagen']['name'])) ? $_FILES['txtImagen']['name'
 $txtDescripcion = (isset($_POST['txtDescripcion'])) ? $_POST['txtDescripcion'] : "";
 $txtPrecio = (isset($_POST['txtPrecio'])) ? $_POST['txtPrecio'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : "";
+$page = (isset($_POST['page'])) ? $_POST['page'] : 1;
 
 switch ($accion) {
     case "Agregar":
@@ -37,7 +38,7 @@ switch ($accion) {
             $sentenciaSQL->bindParam(':imagen', $nombreArchivo);
         }
         $sentenciaSQL->execute();
-        header("Location:productos.php");
+        header("Location:productos.php?page=$page");
         exit;
 
     case "Modificar":
@@ -60,11 +61,11 @@ switch ($accion) {
                 $sentenciaSQL->execute();
             }
         }
-        header("Location:productos.php");
+        header("Location:productos.php?page=$page");
         exit;
 
     case "Cancelar":
-        header("Location:productos.php");
+        header("Location:productos.php?page=$page");
         exit;
 
     case "Seleccionar":
@@ -94,7 +95,7 @@ switch ($accion) {
         $sentenciaSQL = $conexion->prepare("DELETE FROM libros WHERE id=:id");
         $sentenciaSQL->bindParam(':id', $txtID);
         $sentenciaSQL->execute();
-        header("Location:productos.php");
+        header("Location:productos.php?page=$page");
         exit;
 }
 
@@ -104,7 +105,7 @@ $nextID = $nextIDQuery->fetch(PDO::FETCH_ASSOC)['Auto_increment'];
 
 // Parámetros de búsqueda y paginación
 $letra = isset($_GET['letra']) ? $_GET['letra'] : '';
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : $page;
 $itemsPerPage = 10;
 $offset = ($page - 1) * $itemsPerPage;
 
@@ -235,6 +236,7 @@ include("../template/cabecera_admin.php");
                         <div class="form-group">
                             <label for="txtID">ID:</label>
                             <input type="text" class="form-control" value="<?php echo ($accion == 'Seleccionar') ? $txtID : $nextID; ?>" name="txtID" id="txtID" placeholder="ID" readonly>
+                            <input type="hidden" name="page" value="<?php echo $page; ?>">
                         </div>
 
                         <div class="form-group">
@@ -272,7 +274,7 @@ include("../template/cabecera_admin.php");
         </div>
 
         <div class="col-md-7">
-            <table class="table table-bordered">
+            <table class="table table-bordered bg-white">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -297,8 +299,9 @@ include("../template/cabecera_admin.php");
                             <td>
                                 <form method="post">
                                     <input type="hidden" name="txtID" id="txtID" value="<?php echo $libro['id']; ?>" />
-                                    <input type="submit" name="accion" value="Seleccionar" class="btn btn-primary" />
-                                    <input type="submit" name="accion" value="Borrar" class="btn btn-danger" />
+                                    <input type="hidden" name="page" value="<?php echo $page; ?>">
+                                    <button type="submit" name="accion" value="Seleccionar" class="btn btn-primary btn-sm btn-block">Seleccionar</button>
+                                    <button type="button" class="btn btn-danger btn-sm btn-block mt-2" onclick="confirmarBorrar(<?php echo $libro['id']; ?>, <?php echo $page; ?>)">Borrar</button>
                                 </form>
                             </td>
                         </tr>
@@ -322,3 +325,35 @@ include("../template/cabecera_admin.php");
 </div>
 
 <?php include("../template/pie.php"); ?>
+
+<script>
+    function confirmarBorrar(id, page) {
+        if (confirm('¿Está seguro de que desea borrar este libro? Esta acción no se puede deshacer. El ID se perderá y el libro no podrá recuperarse a menos que se dé de alta como un nuevo libro con un ID diferente.')) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'productos.php';
+            
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'txtID';
+            input.value = id;
+            
+            var accion = document.createElement('input');
+            accion.type = 'hidden';
+            accion.name = 'accion';
+            accion.value = 'Borrar';
+            
+            var pageInput = document.createElement('input');
+            pageInput.type = 'hidden';
+            pageInput.name = 'page';
+            pageInput.value = page;
+            
+            form.appendChild(input);
+            form.appendChild(accion);
+            form.appendChild(pageInput);
+            
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
