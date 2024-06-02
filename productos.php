@@ -1,5 +1,4 @@
 <?php include("template/cabecera_publica.php"); ?>
-
 <?php
 include("administrador/config/bd.php");
 
@@ -52,6 +51,35 @@ foreach ($params as $key => &$val) {
 }
 $sentenciaSQL->execute();
 $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+
+// Registro de búsqueda por nombre
+if (!empty($_GET['nombre'])) {
+    foreach ($listaLibros as $libro) {
+        $insertQuery = $conexion->prepare("INSERT INTO libro_busquedas (libro_id, criterio, fecha) VALUES (:libro_id, 'nombre', NOW())");
+        $insertQuery->bindParam(':libro_id', $libro['id']);
+        $insertQuery->execute();
+    }
+}
+
+// Registro de búsqueda por ID
+if (!empty($_GET['id'])) {
+    foreach ($listaLibros as $libro) {
+        $insertQuery = $conexion->prepare("INSERT INTO libro_busquedas (libro_id, criterio, fecha) VALUES (:libro_id, 'id', NOW())");
+        $insertQuery->bindParam(':libro_id', $libro['id']);
+        $insertQuery->execute();
+    }
+}
+
+// Registro de búsqueda por rango de precios
+if (!empty($_GET['precio_min']) || !empty($_GET['precio_max'])) {
+    foreach ($listaLibros as $libro) {
+        $insertQuery = $conexion->prepare("INSERT INTO libro_busquedas (libro_id, criterio, precio_min, precio_max, fecha) VALUES (:libro_id, 'precio', :precio_min, :precio_max, NOW())");
+        $insertQuery->bindParam(':libro_id', $libro['id']);
+        $insertQuery->bindParam(':precio_min', $_GET['precio_min']);
+        $insertQuery->bindParam(':precio_max', $_GET['precio_max']);
+        $insertQuery->execute();
+    }
+}
 
 // Obtener el número total de libros para la paginación
 $countQuery = "SELECT COUNT(*) as total FROM libros WHERE 1=1";
@@ -108,7 +136,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
                 <input type="number" class="form-control" name="precio_max" placeholder="Precio máximo" step="0.01" value="<?php echo isset($_GET['precio_max']) ? $_GET['precio_max'] : ''; ?>">
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">Buscar</button>
+                <button type="submit" class="btn btn-primary" name="buscar">Buscar</button>
             </div>
         </div>
     </form>
@@ -154,7 +182,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
                                 <span style="color: green; font-weight: bold; font-size: 1.5em;">Gratis</span>
                             <?php } ?>
                         </p>
-                        <a name="" id="" class="btn btn-primary mt-auto" href="detalle.php?id=<?php echo $libro['id']; ?>" role="button">Ver más</a>
+                        <a name="" id="" class="btn btn-primary mt-auto" href="detalle.php?id=<?php echo $libro['id']; ?>&page=<?php echo $page; ?>" role="button">Ver más</a>
                     </div>
                 </div>
             </div>

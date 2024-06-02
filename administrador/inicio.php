@@ -24,7 +24,7 @@ include("template/cabecera_admin.php");
                 <div class="card-body text-center">
                     <h5 class="card-title">Estadísticas</h5>
                     <p class="card-text">Consulta y analiza las estadísticas del sitio web para obtener información sobre el rendimiento y el uso.</p>
-                    <a href="#" class="btn btn-primary mt-auto">Ver Estadísticas</a>
+                    <a href="seccion/estadisticas.php" class="btn btn-primary mt-auto">Ver Estadísticas</a>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@ include("template/cabecera_admin.php");
                 <div class="card-body text-center">
                     <h5 class="card-title">Gestión de Libros</h5>
                     <p class="card-text">Añade, edita o elimina libros de la biblioteca. Mantén tu catálogo actualizado y organizado.</p>
-                    <a href="<?php echo $url; ?>/administrador/seccion/productos.php" class="btn btn-primary mt-auto">Ir a Libros</a>
+                    <a href="seccion/productos.php" class="btn btn-primary mt-auto">Ir a Libros</a>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@ include("template/cabecera_admin.php");
                 <div class="card-body text-center">
                     <h5 class="card-title">Gestión de Usuarios</h5>
                     <p class="card-text">Administra los usuarios registrados, controla sus permisos y actividades en el sitio web.</p>
-                    <a href="#" class="btn btn-primary mt-auto">Ir a Usuarios</a>
+                    <a href="seccion/usuarios.php" class="btn btn-primary mt-auto">Ir a Usuarios</a>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@ include("template/cabecera_admin.php");
                 <div class="card-body text-center">
                     <h5 class="card-title">Reportes</h5>
                     <p class="card-text">Genera y visualiza reportes detallados sobre las actividades y el rendimiento del sitio.</p>
-                    <a href="#" class="btn btn-primary mt-auto">Ver Reportes</a>
+                    <a href="seccion/reportes.php" class="btn btn-primary mt-auto">Ver Reportes</a>
                 </div>
             </div>
         </div>
