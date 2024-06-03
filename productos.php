@@ -119,9 +119,9 @@ $totalItems = $countStmt->fetch(PDO::FETCH_ASSOC)['total'];
 $totalPages = ceil($totalItems / $itemsPerPage);
 ?>
 
-<div class="container">
+<div class="container mt-4">
     <!-- Formulario de Búsqueda -->
-    <form method="GET" class="mb-4" style="margin-top: 20px;">
+    <form method="GET" class="mb-4">
         <div class="row">
             <div class="col-md-3">
                 <input type="text" class="form-control" name="nombre" placeholder="Buscar por nombre" value="<?php echo isset($_GET['nombre']) ? $_GET['nombre'] : ''; ?>">
@@ -136,7 +136,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
                 <input type="number" class="form-control" name="precio_max" placeholder="Precio máximo" step="0.01" value="<?php echo isset($_GET['precio_max']) ? $_GET['precio_max'] : ''; ?>">
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary" name="buscar">Buscar</button>
+                <button type="submit" class="btn btn-primary" name="buscar" style="background-color: #800000; border-color: #800000;">Buscar</button>
             </div>
         </div>
     </form>
@@ -168,21 +168,21 @@ $totalPages = ceil($totalItems / $itemsPerPage);
             }
             ?>
             <div class="col-md-3 mb-4">
-                <div class="card h-100 d-flex flex-column">
+                <div class="card h-100 d-flex flex-column border-0 shadow-lg">
                     <img class="card-img-top" src="./img/<?php echo $libro['imagen']; ?>" style="height: 17rem;" alt="">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title"><?php echo $libro['nombre']; ?></h5>
-                        <p class="card-text"><strong>ID:</strong> <?php echo $libro['id']; ?></p>
+                        <h5 class="card-title" style="color: #333;"><?php echo $libro['nombre']; ?></h5>
+                        <p class="card-text" style="color: #333;"><strong>ID:</strong> <?php echo $libro['id']; ?></p>
                         <p class="card-text mt-2">
                             <?php if ($libro['precio'] != 0) { ?>
                                 <span style="text-decoration: line-through; color: red; font-size: 1.2em;">$<?php echo number_format($inflatedPrice, 2); ?></span>
                                 <span style="color: green; font-weight: bold; font-size: 1.5em;">$<?php echo number_format($libro['precio'], 2); ?></span>
-                                <span style="color: gray; font-size: 0.9em;">(<?php echo round(($inflatedPrice - $libro['precio']) / $inflatedPrice * 100); ?>% de descuento)</span>
+                                <span style="color: gray; font-size: 0.9em;">(<?php echo round(($inflatedPrice - $libro['precio']) / $inflatedPrice * 100); ?>% de recuperación)</span>
                             <?php } else { ?>
                                 <span style="color: green; font-weight: bold; font-size: 1.5em;">Gratis</span>
                             <?php } ?>
                         </p>
-                        <a name="" id="" class="btn btn-primary mt-auto" href="detalle.php?id=<?php echo $libro['id']; ?>&page=<?php echo $page; ?>" role="button">Ver más</a>
+                        <a name="" id="" class="btn btn-primary mt-auto" href="detalle.php?id=<?php echo $libro['id']; ?>&page=<?php echo $page; ?>" role="button" style="background-color: #800000; border-color: #800000;">Ver más</a>
                     </div>
                 </div>
             </div>
@@ -203,3 +203,34 @@ $totalPages = ceil($totalItems / $itemsPerPage);
 </div>
 
 <?php include("template/pie.php"); ?>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGaS3ukQmTktG8f5DpiUibVx3" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIyFEYeDjAxZw8++PpRtW0uChFfYCAaMSFZcUOLO" crossorigin="anonymous"></script>
+
+<style>
+    .card {
+        border-radius: 8px;
+    }
+    .card-body {
+        padding: 20px;
+    }
+    h5, p {
+        font-family: 'Arial', sans-serif;
+    }
+    h5 {
+        font-size: 1.25rem;
+        color: #333;
+    }
+    p {
+        font-size: 1rem;
+        color: #333;
+    }
+    .btn {
+        font-family: 'Arial', sans-serif;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+</style>

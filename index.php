@@ -35,14 +35,14 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC); // Muestra los último
 
     <!-- Sección de bienvenida -->
     <section class="mb-5 text-center">
-        <h1 class="display-4">Bienvenidos a Nuestra Biblioteca</h1>
-        <p class="lead">Descubre una amplia variedad de libros de todos los géneros y autores. Explora nuestras colecciones y encuentra tu próxima gran lectura.</p>
-        <hr class="my-4">
-        <p>En nuestra biblioteca, creemos en el poder de los libros para inspirar, educar y entretener. Estamos dedicados a ofrecer una selección diversa y emocionante de libros para todos los gustos y edades.</p>
+        <h1 class="display-4" style="color: #800000;">Bienvenidos al Bazar de Reciclaje de Libros de la Universidad de Guadalajara.</h1>
+        <p class="lead" style="color: #333;">Recicla, regala o encuentra libros usados para que otros estudiantes puedan aprovecharlos.</p>
+        <hr class="my-4" style="border-color: #ffcd00;">
+        <p>En nuestro bazar, creemos en el poder de los libros para inspirar, educar y entretener. Dedicados a ofrecer una selección diversa y emocionante de libros para todos los gustos y edades.</p>
     </section>
 
     <!-- Productos Recientes -->
-    <h2 class="mb-4">Productos Recientes</h2>
+    <h2 class="mb-4" style="color: #800000;">Libros Recientes</h2>
     <div class="row">
         <?php foreach($listaLibros as $libro) { 
             // Calcular precio inflado y descuento
@@ -64,18 +64,18 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC); // Muestra los último
                 <div class="card h-100 d-flex flex-column">
                     <img class="card-img-top" src="img/<?php echo $libro['imagen']; ?>" style="height: 17rem;" alt="">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title"><?php echo $libro['nombre']; ?></h5>
-                        <p class="card-text"><strong>ID:</strong> <?php echo $libro['id']; ?></p>
+                        <h5 class="card-title" style="color: #333;"><?php echo $libro['nombre']; ?></h5>
+                        <p class="card-text" style="color: #333;"><strong>ID:</strong> <?php echo $libro['id']; ?></p>
                         <p class="card-text mt-2">
                             <?php if ($libro['precio'] != 0) { ?>
                                 <span style="text-decoration: line-through; color: red; font-size: 1.2em;">$<?php echo number_format($inflatedPrice, 2); ?></span>
                                 <span style="color: green; font-weight: bold; font-size: 1.5em;">$<?php echo number_format($libro['precio'], 2); ?></span>
-                                <span style="color: gray; font-size: 0.9em;">(<?php echo round(($inflatedPrice - $libro['precio']) / $inflatedPrice * 100); ?>% de descuento)</span>
+                                <span style="color: gray; font-size: 0.9em;">(<?php echo round(($inflatedPrice - $libro['precio']) / $inflatedPrice * 100); ?>% de recuperación)</span>
                             <?php } else { ?>
                                 <span style="color: green; font-weight: bold; font-size: 1.5em;">Gratis</span>
                             <?php } ?>
                         </p>
-                        <a name="" id="" class="btn btn-primary mt-auto" href="detalle.php?id=<?php echo $libro['id']; ?>" role="button">Ver más</a>
+                        <a name="" id="" class="btn btn-primary mt-auto" href="detalle.php?id=<?php echo $libro['id']; ?>" role="button" style="background-color: #800000; border-color: #800000;">Ver más</a>
                     </div>
                 </div>
             </div>
@@ -86,16 +86,16 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC); // Muestra los último
     <section class="mt-5">
         <div class="row">
             <div class="col-md-4">
-                <h3>Misión</h3>
-                <p>Nuestra misión es fomentar el amor por la lectura y proporcionar un acceso fácil a libros de alta calidad para todos.</p>
+                <h3 style="color: #800000;">Misión</h3>
+                <p style="color: #333;">Nuestra misión es fomentar el amor por la lectura y proporcionar un acceso fácil a libros de alta calidad para todos.</p>
             </div>
             <div class="col-md-4">
-                <h3>Visión</h3>
-                <p>Aspiramos a ser la biblioteca de referencia en nuestra comunidad, ofreciendo recursos valiosos y un servicio excepcional a nuestros usuarios.</p>
+                <h3 style="color: #800000;">Visión</h3>
+                <p style="color: #333;">Aspiramos a ser el bazar de reciclaje de libros de referencia en nuestra comunidad, ofreciendo recursos valiosos y un servicio excepcional a nuestros usuarios.</p>
             </div>
             <div class="col-md-4">
-                <h3>Valores</h3>
-                <p>Nos comprometemos con la excelencia, la inclusividad y la innovación en todos nuestros servicios y colecciones.</p>
+                <h3 style="color: #800000;">Valores</h3>
+                <p style="color: #333;">Nos comprometemos con la excelencia, la inclusividad y la innovación en todos nuestros servicios y colecciones.</p>
             </div>
         </div>
     </section>

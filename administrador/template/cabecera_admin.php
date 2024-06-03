@@ -88,7 +88,7 @@ if (!isset($_SESSION['usuario'])) {
                 <a class="nav-link" href="<?php echo $url; ?>/administrador/inicio.php">Inicio</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo $url; ?>/administrador/seccion/productos.php">Galería de Libros</a>
+                <a class="nav-link" href="<?php echo $url; ?>/administrador/seccion/productos.php">Bazar de Libros</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
