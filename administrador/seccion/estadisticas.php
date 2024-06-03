@@ -87,45 +87,61 @@ function generarGrafico($elementId, $titulo, $labels, $data, $label) {
 
 ?>
 <div class="container mt-5">
-    <h1 class="mb-4">Estadísticas de la Biblioteca</h1>
+    <h1 class="mb-4 text-center" style="color: #333;">Estadísticas del Bazar de Reciclaje de Libros</h1>
 
     <div class="row mb-5">
         <div class="col-md-6">
-            <canvas id="graficoClicks"></canvas>
-            <?php
-            $labels = array_column($result_clicks, 'nombre');
-            $data = array_column($result_clicks, 'clics');
-            generarGrafico('graficoClicks', 'Top 6 Libros Más Clickeados', $labels, $data, 'Clics');
-            ?>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <canvas id="graficoClicks"></canvas>
+                    <?php
+                    $labels = array_column($result_clicks, 'nombre');
+                    $data = array_column($result_clicks, 'clics');
+                    generarGrafico('graficoClicks', 'Top 6 Libros Más Clickeados', $labels, $data, 'Clics');
+                    ?>
+                </div>
+            </div>
         </div>
 
         <div class="col-md-6">
-            <canvas id="graficoBusquedaNombre"></canvas>
-            <?php
-            $labels = array_column($result_busqueda_nombre, 'nombre');
-            $data = array_column($result_busqueda_nombre, 'busquedas');
-            generarGrafico('graficoBusquedaNombre', 'Top 6 Libros Más Buscados por Nombre', $labels, $data, 'Búsquedas');
-            ?>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <canvas id="graficoBusquedaNombre"></canvas>
+                    <?php
+                    $labels = array_column($result_busqueda_nombre, 'nombre');
+                    $data = array_column($result_busqueda_nombre, 'busquedas');
+                    generarGrafico('graficoBusquedaNombre', 'Top 6 Libros Más Buscados por Nombre', $labels, $data, 'Búsquedas');
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="row mb-5">
         <div class="col-md-6">
-            <canvas id="graficoBusquedaID"></canvas>
-            <?php
-            $labels = array_column($result_busqueda_id, 'nombre');
-            $data = array_column($result_busqueda_id, 'busquedas');
-            generarGrafico('graficoBusquedaID', 'Top 6 Libros Más Buscados por ID', $labels, $data, 'Búsquedas');
-            ?>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <canvas id="graficoBusquedaID"></canvas>
+                    <?php
+                    $labels = array_column($result_busqueda_id, 'nombre');
+                    $data = array_column($result_busqueda_id, 'busquedas');
+                    generarGrafico('graficoBusquedaID', 'Top 6 Libros Más Buscados por ID', $labels, $data, 'Búsquedas');
+                    ?>
+                </div>
+            </div>
         </div>
 
         <div class="col-md-6">
-            <canvas id="graficoBusquedaPrecios"></canvas>
-            <?php
-            $labels = array_column($result_busqueda_precios, 'rango');
-            $data = array_column($result_busqueda_precios, 'busquedas');
-            generarGrafico('graficoBusquedaPrecios', 'Rangos de Precios Más Buscados', $labels, $data, 'Búsquedas');
-            ?>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <canvas id="graficoBusquedaPrecios"></canvas>
+                    <?php
+                    $labels = array_column($result_busqueda_precios, 'rango');
+                    $data = array_column($result_busqueda_precios, 'busquedas');
+                    generarGrafico('graficoBusquedaPrecios', 'Rangos de Precios Más Buscados', $labels, $data, 'Búsquedas');
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -133,3 +149,22 @@ function generarGrafico($elementId, $titulo, $labels, $data, $label) {
 <?php include("../template/pie.php"); ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    .card {
+        border: none;
+        border-radius: 8px;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+    .card-body {
+        padding: 20px;
+    }
+    h1 {
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+        color: #333;
+    }
+</style>

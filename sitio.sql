@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2024 a las 19:24:45
+-- Tiempo de generación: 03-06-2024 a las 19:12:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -45,18 +45,17 @@ CREATE TABLE `libros` (
 INSERT INTO `libros` (`id`, `nombre`, `titulo`, `autor`, `descripcion`, `imagen`, `precio`, `descuento`) VALUES
 (1, 'Python 2', 'Titulo 1', 'Autor 1', 'Descripción del Libro 1 prueba', '1717104683_Aprendizaje Python.jpg', 119.99, 24),
 (3, 'Android Grow', '', '', 'Descripción del Libro 3', '1717104830_AndroidGrow.png', 55.99, 28),
-(4, 'Prueba sin imagen', '', '', 'Prueba sin imagen', '1717106930_CPlusPlusGrow.png', 1450.00, 48),
-(8, 'Prueba 22w1w1', '', '', '12211d1wdsws', '1717174413_BashGrow.png', 123.00, 20),
-(9, 'fweqedqd', '', '', 'wqdqdew', '1717174440_PHP & MySQL.jpg', 1323.00, 55),
-(17, 'Algorithms Grow 3210', '', '', 'safdasdada', '1717206795_AndroidGrow.png', 123.00, 33),
+(4, 'Prueba sin imagen', '', '', 'Prueba sin imagen', '1717106930_CPlusPlusGrow.png', 0.00, 48),
+(8, 'Bash', '', '', '12211d1wdsws', '1717174413_BashGrow.png', 123.00, 20),
+(9, 'fweqedqd', '', '', 'wqdqdew', '1717174440_PHP & MySQL.jpg', 154.00, 55),
+(17, 'Algorithms Grow 3210', '', '', 'safdasdada', '1717206795_AndroidGrow.png', 100.00, 33),
 (18, 'Android Grow qweqwe', '', '', 'qweqweqweq', '1717206815_Novela JAVA.jpg', 121.00, 35),
-(19, 'Algorithms Grow rerereere', '', '', 'rerererererer', '1717207203_BashGrow.png', 12321.00, 50),
-(20, 'Algorithms Grow teeteteteet', '', '', 'tetetee', '1717207237_AndroidGrow.png', 1233123.00, 29),
-(21, 'Algorithms Grow 0000', '', '', '00000000', '1717207509_AlgorithmsGrow.png', 1.00, 44),
-(23, 'Algorithms Grow 333', '', '', '3333', '1717209618_Aprendizaje Python.jpg', 333.00, 26),
-(24, 'Algorithms Grow 222222', '', '', '2222222222', '1717265007_Novela JAVA.jpg', 222.00, 50),
-(25, 'Python prueba video', '', '', 'este es una prueba para el video', '1717266037_Level 1 - PHP.png', 666.00, 22),
-(26, 'Android Grow 2023', '', '', '2023 prueba', '1717301004_AndroidGrow.png', 2023.00, 29);
+(19, 'Algorithms Grow rerereere', '', '', 'rerererererer', '1717207203_BashGrow.png', 0.00, 50),
+(20, 'Algorithms Grow teeteteteet', '', '', 'tetetee', '1717207237_AndroidGrow.png', 125.00, 29),
+(21, 'Algorithms Grow 0000', '', '', 'hola mundo este es un pequeño test para saber si mayor a 20 caracteres no satura la lista', '1717207509_AlgorithmsGrow.png', 0.00, 44),
+(23, 'Algorithms Grow 333', '', '', '3333', '1717209618_Aprendizaje Python.jpg', 50.00, 26),
+(24, 'Algorithms Grow 222222', '', '', '2222222222', '1717265007_Novela JAVA.jpg', 200.00, 50),
+(25, 'Python prueba video', '', '', 'este es una prueba para el video', '1717266037_Level 1 - PHP.png', 21.99, 22);
 
 -- --------------------------------------------------------
 
@@ -744,7 +743,51 @@ INSERT INTO `libro_busquedas` (`id`, `libro_id`, `criterio`, `fecha`, `precio_mi
 (689, 3, 'precio', '2024-06-02 17:24:03', 0.00, 600.00),
 (690, 18, 'precio', '2024-06-02 17:24:03', 0.00, 600.00),
 (691, 8, 'precio', '2024-06-02 17:24:03', 0.00, 600.00),
-(692, 1, 'precio', '2024-06-02 17:24:03', 0.00, 600.00);
+(692, 1, 'precio', '2024-06-02 17:24:03', 0.00, 600.00),
+(693, 23, 'id', '2024-06-02 17:29:41', NULL, NULL),
+(694, 23, 'precio', '2024-06-02 17:29:41', 0.00, 600.00),
+(695, 21, 'precio', '2024-06-02 17:29:54', 0.00, 600.00),
+(696, 24, 'precio', '2024-06-02 17:29:54', 0.00, 600.00),
+(697, 17, 'precio', '2024-06-02 17:29:54', 0.00, 600.00),
+(698, 23, 'precio', '2024-06-02 17:29:54', 0.00, 600.00),
+(699, 3, 'precio', '2024-06-02 17:29:54', 0.00, 600.00),
+(700, 18, 'precio', '2024-06-02 17:29:54', 0.00, 600.00),
+(701, 8, 'precio', '2024-06-02 17:29:54', 0.00, 600.00),
+(702, 1, 'precio', '2024-06-02 17:29:54', 0.00, 600.00),
+(703, 8, 'id', '2024-06-02 17:30:00', NULL, NULL),
+(704, 8, 'precio', '2024-06-02 17:30:00', 0.00, 600.00),
+(705, 8, 'id', '2024-06-02 17:30:09', NULL, NULL),
+(706, 8, 'precio', '2024-06-02 17:30:09', 0.00, 600.00),
+(707, 8, 'id', '2024-06-02 17:30:10', NULL, NULL),
+(708, 8, 'precio', '2024-06-02 17:30:10', 0.00, 600.00),
+(709, 8, 'id', '2024-06-02 17:30:10', NULL, NULL),
+(710, 8, 'precio', '2024-06-02 17:30:10', 0.00, 600.00),
+(711, 8, 'id', '2024-06-02 17:30:10', NULL, NULL),
+(712, 8, 'precio', '2024-06-02 17:30:10', 0.00, 600.00),
+(713, 8, 'id', '2024-06-02 17:30:10', NULL, NULL),
+(714, 8, 'precio', '2024-06-02 17:30:10', 0.00, 600.00),
+(715, 8, 'id', '2024-06-02 17:30:10', NULL, NULL),
+(716, 8, 'precio', '2024-06-02 17:30:10', 0.00, 600.00),
+(717, 8, 'id', '2024-06-02 17:30:40', NULL, NULL),
+(718, 8, 'precio', '2024-06-02 17:30:40', 0.00, 600.00),
+(719, 8, 'id', '2024-06-02 17:32:15', NULL, NULL),
+(720, 8, 'nombre', '2024-06-03 04:09:17', NULL, NULL),
+(721, 8, 'nombre', '2024-06-03 04:09:18', NULL, NULL),
+(722, 8, 'nombre', '2024-06-03 04:09:19', NULL, NULL),
+(723, 8, 'nombre', '2024-06-03 04:09:19', NULL, NULL),
+(724, 8, 'nombre', '2024-06-03 04:09:19', NULL, NULL),
+(725, 8, 'nombre', '2024-06-03 04:09:19', NULL, NULL),
+(726, 8, 'nombre', '2024-06-03 04:09:19', NULL, NULL),
+(727, 8, 'nombre', '2024-06-03 04:09:20', NULL, NULL),
+(728, 8, 'nombre', '2024-06-03 04:09:20', NULL, NULL),
+(729, 8, 'nombre', '2024-06-03 04:09:20', NULL, NULL),
+(730, 8, 'nombre', '2024-06-03 04:09:20', NULL, NULL),
+(731, 8, 'id', '2024-06-03 04:09:40', NULL, NULL),
+(732, 8, 'id', '2024-06-03 04:09:42', NULL, NULL),
+(733, 8, 'id', '2024-06-03 04:09:42', NULL, NULL),
+(734, 8, 'id', '2024-06-03 04:09:42', NULL, NULL),
+(735, 8, 'id', '2024-06-03 04:09:42', NULL, NULL),
+(736, 8, 'id', '2024-06-03 04:09:42', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -771,7 +814,23 @@ INSERT INTO `libro_clicks` (`id`, `libro_id`, `timestamp`) VALUES
 (20, 10, '2024-06-02 17:20:24'),
 (21, 10, '2024-06-02 17:20:30'),
 (22, 1, '2024-06-02 17:20:40'),
-(23, 1, '2024-06-02 17:20:54');
+(23, 1, '2024-06-02 17:20:54'),
+(24, 8, '2024-06-02 17:32:07'),
+(25, 8, '2024-06-02 17:32:17'),
+(26, 8, '2024-06-02 17:32:22'),
+(27, 8, '2024-06-02 17:32:24'),
+(28, 8, '2024-06-02 17:32:26'),
+(29, 26, '2024-06-03 03:12:59'),
+(30, 26, '2024-06-03 04:03:00'),
+(31, 21, '2024-06-03 04:03:29'),
+(32, 8, '2024-06-03 04:05:08'),
+(33, 1, '2024-06-03 04:05:19'),
+(34, 8, '2024-06-03 04:09:00'),
+(35, 8, '2024-06-03 04:09:04'),
+(36, 25, '2024-06-03 15:12:16'),
+(37, 25, '2024-06-03 15:14:23'),
+(38, 19, '2024-06-03 15:46:15'),
+(39, 4, '2024-06-03 15:46:23');
 
 --
 -- Índices para tablas volcadas
@@ -809,13 +868,13 @@ ALTER TABLE `libros`
 -- AUTO_INCREMENT de la tabla `libro_busquedas`
 --
 ALTER TABLE `libro_busquedas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=693;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=737;
 
 --
 -- AUTO_INCREMENT de la tabla `libro_clicks`
 --
 ALTER TABLE `libro_clicks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

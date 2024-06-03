@@ -193,9 +193,9 @@ $totalPages = ceil($totalItems / $itemsPerPage);
 include("../template/cabecera_admin.php");
 ?>
 
-<div class="container">
+<div class="container mt-5">
     <!-- Formulario de Búsqueda -->
-    <form method="GET" class="mb-4" style="margin-top: 20px;">
+    <form method="GET" class="mb-4">
         <div class="row">
             <div class="col-md-3">
                 <input type="text" class="form-control" name="nombre" placeholder="Buscar por nombre" value="<?php echo isset($_GET['nombre']) ? $_GET['nombre'] : ''; ?>">
@@ -210,7 +210,7 @@ include("../template/cabecera_admin.php");
                 <input type="number" class="form-control" name="precio_max" placeholder="Precio máximo" step="0.01" value="<?php echo isset($_GET['precio_max']) ? $_GET['precio_max'] : ''; ?>">
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">Buscar</button>
+                <button type="submit" class="btn btn-primary btn-block">Buscar</button>
             </div>
         </div>
     </form>
@@ -225,9 +225,9 @@ include("../template/cabecera_admin.php");
 
     <!-- Lista de Libros -->
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5 mb-4">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary text-white">
                     Datos del Libro
                 </div>
                 <div class="card-body">
@@ -257,12 +257,12 @@ include("../template/cabecera_admin.php");
                         <div class="form-group">
                             <label for="txtImagen">Imagen:</label>
                             <?php if ($txtImagen != "") { ?>
-                                <img class="img-thumbnail rounded" src="../../img/<?php echo $txtImagen; ?>" width="50" alt="">
+                                <img class="img-thumbnail rounded mb-2" src="../../img/<?php echo $txtImagen; ?>" width="100" alt="">
                             <?php } ?>
-                            <input type="file" class="form-control" name="txtImagen" id="txtImagen" placeholder="Imagen del libro">
+                            <input type="file" class="form-control-file" name="txtImagen" id="txtImagen">
                         </div>
 
-                        <div class="btn-group" role="group" aria-label="">
+                        <div class="btn-group" role="group">
                             <button type="submit" name="accion" <?php echo ($accion == "Seleccionar") ? "disabled" : ""; ?> value="Agregar" class="btn btn-success">Agregar</button>
                             <button type="submit" name="accion" <?php echo ($accion != "Seleccionar") ? "disabled" : ""; ?> value="Modificar" class="btn btn-warning">Modificar</button>
                             <button type="submit" name="accion" <?php echo ($accion != "Seleccionar") ? "disabled" : ""; ?> value="Cancelar" class="btn btn-info">Cancelar</button>
@@ -274,40 +274,46 @@ include("../template/cabecera_admin.php");
         </div>
 
         <div class="col-md-7">
-            <table class="table table-bordered bg-white">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Precio</th>
-                        <th>Imagen</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($listaLibros as $libro) { ?>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover bg-white">
+                    <thead class="thead-dark">
                         <tr>
-                            <td><?php echo $libro['id']; ?></td>
-                            <td><?php echo $libro['nombre']; ?></td>
-                            <td><?php echo $libro['descripcion']; ?></td>
-                            <td><?php echo $libro['precio']; ?></td>
-                            <td>
-                                <img class="img-thumbnail rounded" src="../../img/<?php echo $libro['imagen']; ?>" width="50" alt="">
-                            </td>
-
-                            <td>
-                                <form method="post">
-                                    <input type="hidden" name="txtID" id="txtID" value="<?php echo $libro['id']; ?>" />
-                                    <input type="hidden" name="page" value="<?php echo $page; ?>">
-                                    <button type="submit" name="accion" value="Seleccionar" class="btn btn-primary btn-sm btn-block">Seleccionar</button>
-                                    <button type="button" class="btn btn-danger btn-sm btn-block mt-2" onclick="confirmarBorrar(<?php echo $libro['id']; ?>, <?php echo $page; ?>)">Borrar</button>
-                                </form>
-                            </td>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Descripción</th>
+                            <th class="text-center">Precio</th>
+                            <th class="text-center">Imagen</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($listaLibros as $libro) { ?>
+                            <tr class="libro-row" data-id="<?php echo $libro['id']; ?>" data-page="<?php echo $page; ?>">
+                                <td class="text-center align-middle"><?php echo $libro['id']; ?></td>
+                                <td class="text-center align-middle"><?php echo $libro['nombre']; ?></td>
+                                <td class="text-center align-middle">
+                                    <?php
+                                    echo (strlen($libro['descripcion']) > 20) ? substr($libro['descripcion'], 0, 20) . '...' : $libro['descripcion'];
+                                    ?>
+                                </td>
+                                <td class="text-center align-middle"><?php echo $libro['precio']; ?></td>
+                                <td class="text-center align-middle">
+                                    <img class="img-thumbnail rounded" src="../../img/<?php echo $libro['imagen']; ?>" width="50" alt="">
+                                </td>
+
+                                <td class="text-center align-middle">
+                                    <form method="post">
+                                        <input type="hidden" name="txtID" id="txtID" value="<?php echo $libro['id']; ?>" />
+                                        <input type="hidden" name="page" value="<?php echo $page; ?>">
+                                        <button type="submit" name="accion" value="Seleccionar" class="btn btn-primary btn-sm btn-block">Seleccionar</button>
+                                        <button type="button" class="btn btn-danger btn-sm btn-block mt-2" onclick="confirmarBorrar(<?php echo $libro['id']; ?>, <?php echo $page; ?>)">Borrar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -356,4 +362,74 @@ include("../template/cabecera_admin.php");
             form.submit();
         }
     }
+
+    // Añadir evento de clic a la fila de la tabla
+    document.querySelectorAll('.libro-row').forEach(function(row) {
+        row.addEventListener('click', function() {
+            var id = this.dataset.id;
+            var page = this.dataset.page;
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'productos.php';
+
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'txtID';
+            input.value = id;
+
+            var accion = document.createElement('input');
+            accion.type = 'hidden';
+            accion.name = 'accion';
+            accion.value = 'Seleccionar';
+
+            var pageInput = document.createElement('input');
+            pageInput.type = 'hidden';
+            pageInput.name = 'page';
+            pageInput.value = page;
+
+            form.appendChild(input);
+            form.appendChild(accion);
+            form.appendChild(pageInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        });
+    });
 </script>
+
+<style>
+    .card {
+        border: none;
+        border-radius: 8px;
+    }
+    .card-header {
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+    .btn-group .btn {
+        margin-right: 5px;
+    }
+    .btn-primary, .btn-success, .btn-warning, .btn-info {
+        transition: background-color 0.2s, border-color 0.2s;
+    }
+    .btn-primary:hover, .btn-success:hover, .btn-warning:hover, .btn-info:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    .table-hover tbody tr:hover {
+        background-color: #bfbfbf;
+        cursor: pointer;
+    }
+    .table-responsive {
+        margin-top: 20px;
+    }
+    .table th, .table td {
+        vertical-align: middle;
+    }
+    .table img {
+        transition: transform 0.2s;
+    }
+    .table img:hover {
+        transform: scale(1.1);
+    }
+</style>
