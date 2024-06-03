@@ -15,7 +15,7 @@ include("template/cabecera_admin.php");
 <div class="container container-custom mt-5">
     <div class="page-header text-center">
         <h1 class="display-4">Panel de Administración</h1>
-        <p class="lead">Bienvenido, <?php echo $nombreUsuario; ?>. Aquí puedes gestionar el contenido de la biblioteca.</p>
+        <p class="lead">Bienvenido, <?php echo $nombreUsuario; ?>. Aquí puedes gestionar el contenido del Bazar de Reciclaje de Libros.</p>
     </div>
     <div class="row mt-4">
         <!-- Tarjeta de Estadísticas -->
@@ -34,7 +34,7 @@ include("template/cabecera_admin.php");
             <div class="card card-custom mb-4 shadow-sm">
                 <div class="card-body text-center">
                     <h5 class="card-title">Gestión de Libros</h5>
-                    <p class="card-text">Añade, edita o elimina libros de la biblioteca. Mantén tu catálogo actualizado y organizado.</p>
+                    <p class="card-text">Añade, edita o elimina libros del bazar. Mantén tu catálogo actualizado y organizado.</p>
                     <a href="seccion/productos.php" class="btn btn-primary mt-auto">Ir a Libros</a>
                 </div>
             </div>

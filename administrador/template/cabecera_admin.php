@@ -16,7 +16,7 @@ if (!isset($_SESSION['usuario'])) {
 <!doctype html>
 <html lang="es">
 <head>
-    <title>Administrador - Biblioteca</title>
+    <title>Administrador - Bazar de Reciclaje de Libros</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -41,6 +41,23 @@ if (!isset($_SESSION['usuario'])) {
         }
         .dropdown-menu {
             animation: fadeIn 0.5s;
+            z-index: 1050; /* Ensure dropdown menu is above other content */
+            background-color: #34495e; /* Color de fondo más suave */
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .dropdown-item {
+            color: #ecf0f1;
+            transition: background-color 0.3s, color 0.3s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Línea suave entre opciones */
+        }
+        .dropdown-item:last-child {
+            border-bottom: none; /* Eliminar la línea de la última opción */
+        }
+        .dropdown-item:hover {
+            background-color: #f39c12;
+            color: #2c3e50;
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -91,13 +108,14 @@ if (!isset($_SESSION['usuario'])) {
                 <a class="nav-link" href="<?php echo $url; ?>/administrador/seccion/productos.php">Bazar de Libros</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                     Más Opciones
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Usuarios</a>
-                    <a class="dropdown-item" href="#">Reportes</a>
-                </div>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="<?php echo $url; ?>/administrador/seccion/estadisticas.php">Estadísticas</a></li>
+                    <li><a class="dropdown-item" href="<?php echo $url; ?>/administrador/seccion/usuarios.php">Gestión de Usuarios</a></li>
+                    <li><a class="dropdown-item" href="<?php echo $url; ?>/administrador/seccion/reportes.php">Reportes</a></li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" id="logout-link">Cerrar Sesión</a>
@@ -114,6 +132,8 @@ if (!isset($_SESSION['usuario'])) {
     </div>
 </div>
 
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGaS3ukQmTktG8f5DpiUibVx3" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIyFEYeDjAxZw8++PpRtW0uChFfYCAaMSFZcUOLO" crossorigin="anonymous"></script>
@@ -132,6 +152,28 @@ if (!isset($_SESSION['usuario'])) {
 
     document.getElementById('cancel-logout').addEventListener('click', function() {
         document.getElementById('logout-overlay').style.display = 'none';
+    });
+
+    // Ensure the dropdown works properly
+    $(document).ready(function() {
+        $('.dropdown-toggle').dropdown();
+    });
+
+    // Ensure the dropdown is always on top
+    $('.dropdown-toggle').on('click', function () {
+        var $el = $(this).next('.dropdown-menu');
+        var isVisible = $el.is(':visible');
+        $('.dropdown-menu').hide();
+        if (!isVisible) {
+            $el.show();
+        }
+    });
+
+    // Close the dropdown if clicking outside of it
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('.dropdown-menu, .dropdown-toggle').length) {
+            $('.dropdown-menu').hide();
+        }
     });
 </script>
 </body>
