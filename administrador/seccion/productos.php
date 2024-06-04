@@ -252,6 +252,7 @@ include("../template/cabecera_admin.php");
                         <div class="form-group">
                             <label for="txtPrecio">Precio:</label>
                             <input type="number" step="0.01" class="form-control" value="<?php echo $txtPrecio; ?>" name="txtPrecio" id="txtPrecio" placeholder="Precio del libro">
+                            <small id="precioWarning" class="form-text text-danger d-none">El precio no puede exceder los $200. La plataforma UniBooks UDG busca apoyar a los estudiantes de la universidad sin ánimo de lucro, promoviendo la pasión por el estudio y la lectura. Por favor, ajuste el precio.</small>
                         </div>
 
                         <div class="form-group">
@@ -291,11 +292,7 @@ include("../template/cabecera_admin.php");
                             <tr class="libro-row" data-id="<?php echo $libro['id']; ?>" data-page="<?php echo $page; ?>">
                                 <td class="text-center align-middle"><?php echo $libro['id']; ?></td>
                                 <td class="text-center align-middle"><?php echo $libro['nombre']; ?></td>
-                                <td class="text-center align-middle">
-                                    <?php
-                                    echo (strlen($libro['descripcion']) > 20) ? substr($libro['descripcion'], 0, 20) . '...' : $libro['descripcion'];
-                                    ?>
-                                </td>
+                                <td class="text-center align-middle"><?php echo (strlen($libro['descripcion']) > 20) ? substr($libro['descripcion'], 0, 20) . '...' : $libro['descripcion']; ?></td>
                                 <td class="text-center align-middle"><?php echo $libro['precio']; ?></td>
                                 <td class="text-center align-middle">
                                     <img class="img-thumbnail rounded" src="../../img/<?php echo $libro['imagen']; ?>" width="50" alt="">
@@ -395,6 +392,28 @@ include("../template/cabecera_admin.php");
             form.submit();
         });
     });
+
+    // Validar el precio máximo
+    document.getElementById('txtPrecio').addEventListener('input', function() {
+        var precio = parseFloat(this.value);
+        var agregarBtn = document.querySelector('button[name="accion"][value="Agregar"]');
+        var modificarBtn = document.querySelector('button[name="accion"][value="Modificar"]');
+        var precioWarning = document.getElementById('precioWarning');
+
+        if (precio > 200) {
+            precioWarning.classList.remove('d-none');
+            agregarBtn.disabled = true;
+            modificarBtn.disabled = true;
+        } else {
+            precioWarning.classList.add('d-none');
+            modificarBtn.disabled = false;
+        }
+    });
+
+    // Deshabilitar el botón de agregar cuando se selecciona un libro
+    if (<?php echo ($accion == 'Seleccionar') ? 'true' : 'false'; ?>) {
+        document.querySelector('button[name="accion"][value="Agregar"]').disabled = true;
+    }
 </script>
 
 <style>
