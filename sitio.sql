@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-06-2024 a las 19:12:53
+-- Tiempo de generación: 04-06-2024 a las 22:09:49
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sitio`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `contrasena` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `admin`
+--
+
+INSERT INTO `admin` (`id`, `usuario`, `contrasena`) VALUES
+(1, 'admin', '$2y$10$IuT2u9jzUPHZ/yry3jmqg.vMjQMVEiH4W6DoPsvxhHJEXBu7BqKRO');
 
 -- --------------------------------------------------------
 
@@ -52,9 +71,9 @@ INSERT INTO `libros` (`id`, `nombre`, `titulo`, `autor`, `descripcion`, `imagen`
 (18, 'Android Grow qweqwe', '', '', 'qweqweqweq', '1717206815_Novela JAVA.jpg', 121.00, 35),
 (19, 'Algorithms Grow rerereere', '', '', 'rerererererer', '1717207203_BashGrow.png', 0.00, 50),
 (20, 'Algorithms Grow teeteteteet', '', '', 'tetetee', '1717207237_AndroidGrow.png', 125.00, 29),
-(21, 'Algorithms Grow 0000', '', '', 'hola mundo este es un pequeño test para saber si mayor a 20 caracteres no satura la lista', '1717207509_AlgorithmsGrow.png', 0.00, 44),
+(21, 'Algorithms Grow 0000', '', '', 'hola mundo este es un pequeño test para saber si mayor a 20 caracteres no satura la lista', '1717207509_AlgorithmsGrow.png', 200.00, 44),
 (23, 'Algorithms Grow 333', '', '', '3333', '1717209618_Aprendizaje Python.jpg', 50.00, 26),
-(24, 'Algorithms Grow 222222', '', '', '2222222222', '1717265007_Novela JAVA.jpg', 200.00, 50),
+(24, 'Algorithms Grow 222222', '', '', '2222222222', '1717265007_Novela JAVA.jpg', 0.00, 50),
 (25, 'Python prueba video', '', '', 'este es una prueba para el video', '1717266037_Level 1 - PHP.png', 21.99, 22);
 
 -- --------------------------------------------------------
@@ -787,7 +806,55 @@ INSERT INTO `libro_busquedas` (`id`, `libro_id`, `criterio`, `fecha`, `precio_mi
 (733, 8, 'id', '2024-06-03 04:09:42', NULL, NULL),
 (734, 8, 'id', '2024-06-03 04:09:42', NULL, NULL),
 (735, 8, 'id', '2024-06-03 04:09:42', NULL, NULL),
-(736, 8, 'id', '2024-06-03 04:09:42', NULL, NULL);
+(736, 8, 'id', '2024-06-03 04:09:42', NULL, NULL),
+(737, 21, 'nombre', '2024-06-04 17:27:56', NULL, NULL),
+(738, 24, 'nombre', '2024-06-04 17:27:56', NULL, NULL),
+(739, 17, 'nombre', '2024-06-04 17:27:56', NULL, NULL),
+(740, 23, 'nombre', '2024-06-04 17:27:56', NULL, NULL),
+(741, 19, 'nombre', '2024-06-04 17:27:56', NULL, NULL),
+(742, 20, 'nombre', '2024-06-04 17:27:56', NULL, NULL),
+(743, 21, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(744, 24, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(745, 17, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(746, 23, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(747, 19, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(748, 20, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(749, 21, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(750, 24, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(751, 17, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(752, 23, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(753, 19, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(754, 20, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(755, 21, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(756, 24, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(757, 17, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(758, 23, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(759, 19, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(760, 20, 'nombre', '2024-06-04 17:28:20', NULL, NULL),
+(761, 21, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(762, 24, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(763, 17, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(764, 23, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(765, 19, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(766, 20, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(767, 21, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(768, 24, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(769, 17, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(770, 23, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(771, 19, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(772, 20, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(773, 21, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(774, 24, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(775, 17, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(776, 23, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(777, 19, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(778, 20, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(779, 21, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(780, 24, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(781, 17, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(782, 23, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(783, 19, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(784, 20, 'nombre', '2024-06-04 17:28:21', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -830,11 +897,64 @@ INSERT INTO `libro_clicks` (`id`, `libro_id`, `timestamp`) VALUES
 (36, 25, '2024-06-03 15:12:16'),
 (37, 25, '2024-06-03 15:14:23'),
 (38, 19, '2024-06-03 15:46:15'),
-(39, 4, '2024-06-03 15:46:23');
+(39, 4, '2024-06-03 15:46:23'),
+(40, 25, '2024-06-03 22:21:33'),
+(41, 4, '2024-06-03 22:21:39'),
+(42, 21, '2024-06-03 22:21:57'),
+(43, 21, '2024-06-03 22:22:04'),
+(44, 23, '2024-06-04 17:27:47'),
+(45, 21, '2024-06-04 20:04:58');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `login_attempts`
+--
+
+CREATE TABLE `login_attempts` (
+  `id` int(11) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `attempt_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `bloqueo_until` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `login_attempts`
+--
+
+INSERT INTO `login_attempts` (`id`, `usuario`, `attempt_time`, `bloqueo_until`) VALUES
+(66, 's', '2024-06-04 19:20:02', NULL),
+(67, 's', '2024-06-04 19:20:04', NULL),
+(68, 's', '2024-06-04 19:20:05', '2024-06-05 03:21:05'),
+(69, 's', '2024-06-04 19:27:34', NULL),
+(70, 's', '2024-06-04 19:27:37', NULL),
+(71, 's', '2024-06-04 19:27:39', '2024-06-05 03:28:39'),
+(72, 's', '2024-06-04 19:33:29', NULL),
+(73, 's', '2024-06-04 19:33:31', NULL),
+(74, 's', '2024-06-04 19:33:33', '2024-06-05 03:34:33'),
+(75, 's', '2024-06-04 19:37:36', '2024-06-05 03:38:36'),
+(76, 'a', '2024-06-04 19:37:58', NULL),
+(77, 'a', '2024-06-04 19:38:00', NULL),
+(78, 'a', '2024-06-04 19:38:01', '2024-06-05 03:39:01'),
+(79, 's', '2024-06-04 19:38:42', NULL),
+(80, 's', '2024-06-04 19:38:44', '2024-06-05 03:39:44'),
+(81, 'a', '2024-06-04 19:39:04', '2024-06-05 03:40:04'),
+(82, 'Admin', '2024-06-04 19:50:03', NULL),
+(83, 'Admin', '2024-06-04 19:50:07', NULL),
+(84, 's', '2024-06-04 19:58:37', NULL),
+(85, 's', '2024-06-04 19:58:40', NULL),
+(86, 's', '2024-06-04 19:58:41', '2024-06-05 03:59:41'),
+(87, 's', '2024-06-04 19:59:57', '2024-06-05 04:00:57');
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `libros`
@@ -855,8 +975,20 @@ ALTER TABLE `libro_clicks`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `login_attempts`
+--
+ALTER TABLE `login_attempts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `libros`
@@ -868,13 +1000,19 @@ ALTER TABLE `libros`
 -- AUTO_INCREMENT de la tabla `libro_busquedas`
 --
 ALTER TABLE `libro_busquedas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=737;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=785;
 
 --
 -- AUTO_INCREMENT de la tabla `libro_clicks`
 --
 ALTER TABLE `libro_clicks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT de la tabla `login_attempts`
+--
+ALTER TABLE `login_attempts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
