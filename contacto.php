@@ -39,10 +39,18 @@
                     <p class="text-justify" style="color: #333;">También puedes encontrarnos en nuestras redes sociales:</p>
                     <div class="text-center">
                         <!-- Añadir URLs de redes sociales dentro de href -->
-                        <a href="#" class="btn btn-social-icon btn-facebook" style="background-color: #3b5998; color: white; margin: 5px;" aria-hidden="true"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="btn btn-social-icon btn-twitter" style="background-color: #1da1f2; color: white; margin: 5px;" aria-hidden="true"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="btn btn-social-icon btn-instagram" style="background-color: #e4405f; color: white; margin: 5px;" aria-hidden="true"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="btn btn-social-icon btn-linkedin" style="background-color: #0077b5; color: white; margin: 5px;" aria-hidden="true"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="btn btn-social-icon btn-facebook" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="btn btn-social-icon btn-twitter" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-social-icon btn-instagram" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="btn btn-social-icon btn-linkedin" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -110,6 +118,23 @@
         justify-content: center;
         align-items: center;
         font-size: 1.2rem;
+        margin: 5px;
+    }
+    .btn-facebook {
+        background-color: #3b5998;
+        color: white;
+    }
+    .btn-twitter {
+        background-color: #1da1f2;
+        color: white;
+    }
+    .btn-instagram {
+        background-color: #e4405f;
+        color: white;
+    }
+    .btn-linkedin {
+        background-color: #0077b5;
+        color: white;
     }
     .btn-facebook:hover {
         background-color: #2d4373;
