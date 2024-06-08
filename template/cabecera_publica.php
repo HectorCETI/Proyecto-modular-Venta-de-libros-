@@ -130,6 +130,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $url; ?>/administrador/index.php">Login</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $url; ?>/registro.php">Registro</a>
+            </li>
         </ul>
     </div>
 </nav>

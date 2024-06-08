@@ -4,9 +4,8 @@ if (!isset($_SESSION['usuario'])) {
     header("Location: ../index.php");
     exit;
 } else {
-    if ($_SESSION['usuario'] == "OK") {
-        $nombreUsuario = $_SESSION["nombreUsuario"];
-    }
+    $nombreUsuario = $_SESSION["usuario"];
+    $usuarioID = $_SESSION['usuarioID']; // Asumiendo que tienes almacenado el ID del usuario en la sesión.
 }
 
 include("../config/bd.php");
@@ -21,10 +20,11 @@ $page = (isset($_POST['page'])) ? $_POST['page'] : 1;
 
 switch ($accion) {
     case "Agregar":
-        $sentenciaSQL = $conexion->prepare("INSERT INTO libros (nombre, descripcion, precio, imagen) VALUES (:nombre, :descripcion, :precio, :imagen)");
+        $sentenciaSQL = $conexion->prepare("INSERT INTO libros (nombre, descripcion, precio, imagen, usuario_id) VALUES (:nombre, :descripcion, :precio, :imagen, :usuario_id)");
         $sentenciaSQL->bindParam(':nombre', $txtNombre);
         $sentenciaSQL->bindParam(':descripcion', $txtDescripcion);
         $sentenciaSQL->bindParam(':precio', $txtPrecio);
+        $sentenciaSQL->bindParam(':usuario_id', $usuarioID);
         $nombreArchivo = "";
         if ($txtImagen != "") {
             $fecha = new DateTime();
@@ -42,11 +42,12 @@ switch ($accion) {
         exit;
 
     case "Modificar":
-        $sentenciaSQL = $conexion->prepare("UPDATE libros SET nombre=:nombre, descripcion=:descripcion, precio=:precio WHERE id=:id");
+        $sentenciaSQL = $conexion->prepare("UPDATE libros SET nombre=:nombre, descripcion=:descripcion, precio=:precio WHERE id=:id AND usuario_id=:usuario_id");
         $sentenciaSQL->bindParam(':nombre', $txtNombre);
         $sentenciaSQL->bindParam(':descripcion', $txtDescripcion);
         $sentenciaSQL->bindParam(':precio', $txtPrecio);
         $sentenciaSQL->bindParam(':id', $txtID);
+        $sentenciaSQL->bindParam(':usuario_id', $usuarioID);
         $sentenciaSQL->execute();
 
         if ($txtImagen != "") {
@@ -55,9 +56,10 @@ switch ($accion) {
             $tmpImagen = $_FILES["txtImagen"]["tmp_name"];
             if ($tmpImagen != "") {
                 move_uploaded_file($tmpImagen, "../../img/" . $nombreArchivo);
-                $sentenciaSQL = $conexion->prepare("UPDATE libros SET imagen=:imagen WHERE id=:id");
+                $sentenciaSQL = $conexion->prepare("UPDATE libros SET imagen=:imagen WHERE id=:id AND usuario_id=:usuario_id");
                 $sentenciaSQL->bindParam(':imagen', $nombreArchivo);
                 $sentenciaSQL->bindParam(':id', $txtID);
+                $sentenciaSQL->bindParam(':usuario_id', $usuarioID);
                 $sentenciaSQL->execute();
             }
         }
@@ -69,8 +71,9 @@ switch ($accion) {
         exit;
 
     case "Seleccionar":
-        $sentenciaSQL = $conexion->prepare("SELECT * FROM libros WHERE id=:id");
+        $sentenciaSQL = $conexion->prepare("SELECT * FROM libros WHERE id=:id AND usuario_id=:usuario_id");
         $sentenciaSQL->bindParam(':id', $txtID);
+        $sentenciaSQL->bindParam(':usuario_id', $usuarioID);
         $sentenciaSQL->execute();
         $libro = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
 
@@ -81,8 +84,9 @@ switch ($accion) {
         break;
 
     case "Borrar":
-        $sentenciaSQL = $conexion->prepare("SELECT imagen FROM libros WHERE id=:id");
+        $sentenciaSQL = $conexion->prepare("SELECT imagen FROM libros WHERE id=:id AND usuario_id=:usuario_id");
         $sentenciaSQL->bindParam(':id', $txtID);
+        $sentenciaSQL->bindParam(':usuario_id', $usuarioID);
         $sentenciaSQL->execute();
         $libro = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
 
@@ -92,8 +96,9 @@ switch ($accion) {
             }
         }
 
-        $sentenciaSQL = $conexion->prepare("DELETE FROM libros WHERE id=:id");
+        $sentenciaSQL = $conexion->prepare("DELETE FROM libros WHERE id=:id AND usuario_id=:usuario_id");
         $sentenciaSQL->bindParam(':id', $txtID);
+        $sentenciaSQL->bindParam(':usuario_id', $usuarioID);
         $sentenciaSQL->execute();
         header("Location: productos.php?page=$page");
         exit;
@@ -110,8 +115,8 @@ $itemsPerPage = 10;
 $offset = ($page - 1) * $itemsPerPage;
 
 // Construcción de la consulta con filtros y orden
-$query = "SELECT * FROM libros WHERE 1=1";
-$params = [];
+$query = "SELECT * FROM libros WHERE usuario_id=:usuario_id";
+$params = [':usuario_id' => $usuarioID];
 
 if (!empty($_GET['nombre'])) {
     $query .= " AND nombre LIKE :nombre";
@@ -154,8 +159,8 @@ $sentenciaSQL->execute();
 $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
 // Obtener el número total de libros para la paginación
-$countQuery = "SELECT COUNT(*) as total FROM libros WHERE 1=1";
-$countParams = [];
+$countQuery = "SELECT COUNT(*) as total FROM libros WHERE usuario_id=:usuario_id";
+$countParams = [':usuario_id' => $usuarioID];
 
 if (!empty($_GET['nombre'])) {
     $countQuery .= " AND nombre LIKE :nombre";
@@ -190,7 +195,7 @@ $countStmt->execute();
 $totalItems = $countStmt->fetch(PDO::FETCH_ASSOC)['total'];
 $totalPages = ceil($totalItems / $itemsPerPage);
 
-include("../template/cabecera_admin.php");
+include("../template/cabecera_usuario.php");
 ?>
 
 <div class="container mt-5">
@@ -333,7 +338,7 @@ include("../template/cabecera_admin.php");
     // Confirmar la eliminación de un libro
     document.querySelectorAll('button[name="accion"][value="Borrar"]').forEach(function(button) {
         button.addEventListener('click', function(event) {
-            if (!confirm('¿Está seguro que desea borrar este libro?')) {
+            if (!confirm('¿Está seguro que desea borrar este libro? Esta acción no se puede deshacer. El ID se perderá y el libro no podrá recuperarse a menos que se dé de alta como un nuevo libro con un ID diferente.')) {
                 event.preventDefault();
             }
         });
@@ -352,7 +357,7 @@ include("../template/cabecera_admin.php");
             modificarBtn.disabled = true;
         } else {
             precioWarning.classList.add('d-none');
-            if (document.querySelector('button[name="accion"][value="Agregar"]').disabled) {
+            if (<?php echo ($accion == 'Seleccionar') ? 'true' : 'false'; ?>) {
                 modificarBtn.disabled = false;
             } else {
                 agregarBtn.disabled = false;
