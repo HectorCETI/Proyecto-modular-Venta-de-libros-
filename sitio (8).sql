@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-06-2024 a las 08:25:25
+-- Tiempo de generación: 14-06-2024 a las 22:51:19
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -70,7 +70,6 @@ INSERT INTO `libros` (`id`, `nombre`, `titulo`, `autor`, `descripcion`, `imagen`
 (9, 'fweqedqd', '', '', 'wqdqdew', '1717174440_PHP & MySQL.jpg', 154.00, 55, 0),
 (17, 'Algorithms Grow 3210', '', '', 'safdasdada', '1717206795_AndroidGrow.png', 100.00, 33, 0),
 (18, 'Android Grow qweqwe', '', '', 'qweqweqweq', '1717206815_Novela JAVA.jpg', 121.00, 35, 0),
-(19, 'Algorithms Grow rerereere', '', '', 'rerererererer', '1717207203_BashGrow.png', 0.00, 50, 0),
 (23, 'Algorithms Grow 333', '', '', '3333', '1717209618_Aprendizaje Python.jpg', 50.00, 26, 0),
 (28, '1111111', '', '', '111111', '1717783889_CPlusPlusGrow.png', 111.00, 22, 0),
 (29, '3333333', '', '', '3333', '1717785993_Level 1 - PHP.png', 33.00, 30, 0),
@@ -969,7 +968,8 @@ INSERT INTO `login_attempts` (`id`, `usuario`, `attempt_time`, `bloqueo_until`) 
 (97, 'admin', '2024-06-06 19:22:27', '2024-06-07 03:23:27'),
 (98, 'a', '2024-06-06 19:46:04', NULL),
 (99, 'a', '2024-06-07 18:11:52', NULL),
-(100, 'S', '2024-06-07 18:42:59', NULL);
+(100, 'S', '2024-06-07 18:42:59', NULL),
+(101, 'admin', '2024-06-14 18:22:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -982,21 +982,27 @@ CREATE TABLE `usuarios` (
   `usuario` varchar(50) NOT NULL,
   `contrasena` varchar(255) NOT NULL,
   `nombre` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
   `correo_institucional` varchar(255) NOT NULL,
   `apellido` varchar(50) NOT NULL,
   `telefono` varchar(10) NOT NULL,
-  `direccion` varchar(255) NOT NULL,
-  `codigo_postal` varchar(5) NOT NULL
+  `centro_universitario` varchar(255) DEFAULT NULL,
+  `verificacion` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `usuario`, `contrasena`, `nombre`, `email`, `correo_institucional`, `apellido`, `telefono`, `direccion`, `codigo_postal`) VALUES
-(2, 's', '$2y$10$xEUDphj774HlMzMSbl81NOV4eKmQEtH5EHzGcrVJY3p5s2T9BFije', 's', 's@s', '', '', '', '', ''),
-(3, 'd', '$2y$10$89xqPSPLEai9Hv/2NfLUK.MUs3kT.VW.QrB7pd4CaqOyJCaDLJILW', 'd', 'd@d', '', '', '', '', '');
+INSERT INTO `usuarios` (`id`, `usuario`, `contrasena`, `nombre`, `correo_institucional`, `apellido`, `telefono`, `centro_universitario`, `verificacion`) VALUES
+(2, 's', '$2y$10$xEUDphj774HlMzMSbl81NOV4eKmQEtH5EHzGcrVJY3p5s2T9BFije', 's', '', '', '', NULL, NULL),
+(3, 'd', '$2y$10$89xqPSPLEai9Hv/2NfLUK.MUs3kT.VW.QrB7pd4CaqOyJCaDLJILW', 'd', '', '', '', NULL, NULL),
+(5, 'DIANA', '$2y$10$omruEW/W46Iw.WoBuYMY6ucSWHbqTKNOFlcHavBcEvrzrsupH19Nm', 'DIANA', 'hola@alumnos.udg.mx', 'DIANA', '3333333333', 'CUCEI', NULL),
+(6, 'HECTORCETI', '$2y$10$OF7l2j/BPLCK4CQbBaaxGuo6ZqrZb4vODkcyLBeFRY8NYtIMF/1nS', 'HECTOR', 'hector.alvarez2922@alumnos.udg.mx', 'ALVAREZ', '3331141650', 'CUCEI', NULL),
+(7, 'PRUEBA1', '$2y$10$u3YaI8SH8uswDzFDx59O1u0/rBR.5MrvkVxj/hNz3AFBGplol0j9K', 'SISTEMAS', 'sistemas@academicos.udg.mx', 'SISTEMAS', '3331141650', 'CUCEI', NULL),
+(8, 'ASDADSASASD', '$2y$10$iri5SOMKmd.CBGWLts7ULeSzvijHHD5rC6jf7BUHcFGR8jcB.m.Ey', 'SSDDS', 'asd@academicos.udg.mx', 'ADDASD', '3331141650', 'CUCEI', NULL),
+(9, 'ASDASDASDSA', '$2y$10$tmW5OXB2RNu4ITT.62z5reoOZh.8NEt3gvwV3QW4Hy5RocTOPXdc6', 'PYTH', 'holasdasasssda.w2112@academicos.udg.mx', 'ADMIN', '3333333333', 'CUALTOS', NULL),
+(10, 'HECTORCETI2', '$2y$10$LUj3pynwvva.zB4OlRW0Oe7fOjVkVr0c9ouSbalUrKQQg1q0AN7YK', 'PYTH', 'hector.alvarez29223@academicos.udg.mx', 'ADMIN', '3331141651', 'CUCEI', NULL),
+(11, 'HECTORCETI3', '$2y$10$rUu6AFNfGyqDFPFvtNlRHeTdJJ6C4geZxNUe1vt4abiqMwW1gbBJy', 'PYTHON', 'hector.alvarez2922@academicos.udg.mx', 'ALVAREZ', '3333333331', 'Prepa 12', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -1071,13 +1077,13 @@ ALTER TABLE `libro_clicks`
 -- AUTO_INCREMENT de la tabla `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
