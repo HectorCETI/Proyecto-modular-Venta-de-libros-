@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es">
 <head>
-    <title>Bazar de Reciclaje de Libros - Universidad de Guadalajara</title>
+    <title>UniBooks UDG - Bazar de Reciclaje de Libros</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,8 +12,10 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
+            background-color: #f9f9f9; /* Fondo gris muy claro */
             color: #333;
+            margin: 0;
+            padding: 0;
         }
         .navbar-custom {
             background-color: #800000; /* Color tinto sobrio */
@@ -102,14 +104,22 @@
         .navbar-nav .nav-item:hover::after {
             width: 100%;
         }
+        .full-height {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .content-wrapper {
+            flex: 1;
+        }
     </style>
 </head>
-<body>
+<body class="full-height">
 
 <?php $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb" ?>
 
 <nav class="navbar navbar-expand-lg navbar-custom">
-    <a class="navbar-brand" href="#">Bazar UDG</a>
+    <a class="navbar-brand" href="#">UniBooks UDG</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -137,6 +147,6 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="container content-wrapper">
     <br/>
     <div class="row">

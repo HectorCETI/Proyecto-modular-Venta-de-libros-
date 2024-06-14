@@ -151,38 +151,24 @@ $totalPages = ceil($totalItems / $itemsPerPage);
 
     <!-- Lista de Libros -->
     <div class="row">
-        <?php foreach($listaLibros as $libro) { 
-            // Calcular precio inflado y descuento
-            if ($libro['descuento'] == 0 && $libro['precio'] != 0) {
-                $libro['descuento'] = rand(20, 60);
-                $updateDiscount = $conexion->prepare("UPDATE libros SET descuento=:descuento WHERE id=:id");
-                $updateDiscount->bindParam(':descuento', $libro['descuento']);
-                $updateDiscount->bindParam(':id', $libro['id']);
-                $updateDiscount->execute();
-            }
-            if ($libro['precio'] != 0) {
-                $inflatedPrice = $libro['precio'] / ((100 - $libro['descuento']) / 100);
-            } else {
-                $inflatedPrice = 0;
-                $libro['descuento'] = 0;
-            }
-            ?>
+        <?php foreach($listaLibros as $libro) { ?>
             <div class="col-md-3 mb-4">
                 <div class="card h-100 d-flex flex-column border-0 shadow-lg">
                     <img class="card-img-top" src="./img/<?php echo $libro['imagen']; ?>" style="height: 17rem;" alt="">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title" style="color: #333;"><?php echo $libro['nombre']; ?></h5>
                         <p class="card-text" style="color: #333;"><strong>ID:</strong> <?php echo $libro['id']; ?></p>
-                        <p class="card-text mt-2">
-                            <?php if ($libro['precio'] != 0) { ?>
-                                <span style="text-decoration: line-through; color: red; font-size: 1.2em;">$<?php echo number_format($inflatedPrice, 2); ?></span>
-                                <span style="color: green; font-weight: bold; font-size: 1.5em;">$<?php echo number_format($libro['precio'], 2); ?></span>
-                                <span style="color: gray; font-size: 0.9em;">(<?php echo round(($inflatedPrice - $libro['precio']) / $inflatedPrice * 100); ?>% de recuperación)</span>
-                            <?php } else { ?>
-                                <span style="color: green; font-weight: bold; font-size: 1.5em;">Gratis</span>
-                            <?php } ?>
-                        </p>
-                        <a name="" id="" class="btn btn-primary mt-auto" href="detalle.php?id=<?php echo $libro['id']; ?>&page=<?php echo $page; ?>" role="button" style="background-color: #800000; border-color: #800000;">Ver más</a>
+                        <p class="card-text" style="color: #333; font-size: 0.9rem;"><?php echo (strlen($libro['descripcion']) > 50) ? substr($libro['descripcion'], 0, 50) . '...' : $libro['descripcion']; ?></p>
+                        <div class="mt-auto">
+                            <p class="card-text mt-2">
+                                <?php if ($libro['precio'] != 0) { ?>
+                                    <span style="color: #333; font-weight: bold; font-size: 1.5em;">$<?php echo number_format($libro['precio'], 2); ?></span>
+                                <?php } else { ?>
+                                    <span style="color: green; font-weight: bold; font-size: 1.5em;">Gratis</span>
+                                <?php } ?>
+                            </p>
+                            <a name="" id="" class="btn btn-primary mt-auto" href="detalle.php?id=<?php echo $libro['id']; ?>&page=<?php echo $page; ?>" role="button" style="background-color: #800000; border-color: #800000;">Ver más</a>
+                        </div>
                     </div>
                 </div>
             </div>

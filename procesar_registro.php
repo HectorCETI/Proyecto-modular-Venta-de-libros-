@@ -5,7 +5,11 @@ if ($_POST) {
     $usuario = $_POST['usuario'];
     $contrasena = $_POST['contrasena'];
     $nombre = $_POST['nombre'];
-    $email = $_POST['email'];
+    $apellido = $_POST['apellido'];
+    $correo_institucional = $_POST['correo_institucional'] . '@alumnos.udg.mx';
+    $telefono = $_POST['telefono'];
+    $direccion = $_POST['direccion'];
+    $codigo_postal = $_POST['codigo_postal'];
 
     // Verificar si el usuario ya existe
     $sentenciaSQL = $conexion->prepare("SELECT * FROM usuarios WHERE usuario=:usuario");
@@ -15,16 +19,26 @@ if ($_POST) {
 
     if ($resultado) {
         $mensaje = "El nombre de usuario ya está en uso. Por favor, elige otro.";
+    } elseif (!preg_match('/@alumnos.udg.mx$/', $correo_institucional)) {
+        $mensaje = "El correo institucional debe terminar con '@alumnos.udg.mx'.";
+    } elseif (!preg_match('/^\d{10}$/', $telefono)) {
+        $mensaje = "El número de teléfono debe tener 10 dígitos.";
+    } elseif (!preg_match('/^\d{5}$/', $codigo_postal)) {
+        $mensaje = "El código postal debe tener 5 dígitos.";
     } else {
         // Cifrar la contraseña
         $hashedPassword = password_hash($contrasena, PASSWORD_DEFAULT);
 
         // Insertar el nuevo usuario en la base de datos
-        $sentenciaSQL = $conexion->prepare("INSERT INTO usuarios (usuario, contrasena, nombre, email) VALUES (:usuario, :contrasena, :nombre, :email)");
+        $sentenciaSQL = $conexion->prepare("INSERT INTO usuarios (usuario, contrasena, nombre, apellido, correo_institucional, telefono, direccion, codigo_postal) VALUES (:usuario, :contrasena, :nombre, :apellido, :correo_institucional, :telefono, :direccion, :codigo_postal)");
         $sentenciaSQL->bindParam(':usuario', $usuario);
         $sentenciaSQL->bindParam(':contrasena', $hashedPassword);
         $sentenciaSQL->bindParam(':nombre', $nombre);
-        $sentenciaSQL->bindParam(':email', $email);
+        $sentenciaSQL->bindParam(':apellido', $apellido);
+        $sentenciaSQL->bindParam(':correo_institucional', $correo_institucional);
+        $sentenciaSQL->bindParam(':telefono', $telefono);
+        $sentenciaSQL->bindParam(':direccion', $direccion);
+        $sentenciaSQL->bindParam(':codigo_postal', $codigo_postal);
         $sentenciaSQL->execute();
 
         // Inicio de sesión automático después del registro
@@ -63,8 +77,29 @@ if ($_POST) {
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su nombre">
                         </div>
                         <div class="form-group">
-                            <label for="email" style="color: #333;">Correo Electrónico:</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su correo electrónico">
+                            <label for="apellido" style="color: #333;">Apellido:</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingrese su apellido">
+                        </div>
+                        <div class="form-group">
+                            <label for="correo_institucional" style="color: #333;">Correo Institucional:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="correo_institucional" name="correo_institucional" placeholder="Ingrese su correo institucional">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">@alumnos.udg.mx</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono" style="color: #333;">Teléfono:</label>
+                            <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese su teléfono">
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion" style="color: #333;">Dirección:</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese su dirección">
+                        </div>
+                        <div class="form-group">
+                            <label for="codigo_postal" style="color: #333;">Código Postal:</label>
+                            <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="Ingrese su código postal">
                         </div>
                         <button type="submit" class="btn btn-primary btn-block" style="background-color: #800000; border-color: #800000;">Registrarse</button>
                     </form>

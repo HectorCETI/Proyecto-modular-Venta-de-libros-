@@ -1,7 +1,7 @@
 <?php include("template/cabecera_publica.php"); ?>
 
 <div class="header-section text-center mt-4 mb-4">
-    <h1 class="display-4" style="color: #800000;">Contacto</h1>
+    <h1 class="display-4">Contacto</h1>
 </div>
 
 <div class="container content-section">
@@ -9,22 +9,22 @@
         <div class="col-md-6 mb-4">
             <div class="card border-0 shadow-lg bg-light h-100">
                 <div class="card-body">
-                    <h2 class="text-center" style="color: #800000;">Contáctanos</h2>
-                    <p class="text-justify" style="color: #333;">Si tienes alguna pregunta o comentario, no dudes en ponerte en contacto con nosotros. Puedes utilizar el formulario a continuación o enviarnos un correo electrónico.</p>
+                    <h2 class="text-center">Contáctanos</h2>
+                    <p class="text-justify">Si tienes alguna pregunta o comentario, no dudes en ponerte en contacto con nosotros. Puedes utilizar el formulario a continuación o enviarnos un correo electrónico.</p>
                     <form>
                         <div class="form-group">
-                            <label for="nombre" style="color: #333;">Nombre</label>
+                            <label for="nombre">Nombre</label>
                             <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
                         </div>
                         <div class="form-group">
-                            <label for="email" style="color: #333;">Correo Electrónico</label>
+                            <label for="email">Correo Electrónico</label>
                             <input type="email" class="form-control" id="email" placeholder="Tu correo electrónico">
                         </div>
                         <div class="form-group">
-                            <label for="mensaje" style="color: #333;">Mensaje</label>
+                            <label for="mensaje">Mensaje</label>
                             <textarea class="form-control" id="mensaje" rows="5" placeholder="Tu mensaje"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="background-color: #800000; border-color: #800000;">Enviar</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
                     </form>
                 </div>
             </div>
@@ -32,11 +32,11 @@
         <div class="col-md-6 mb-4">
             <div class="card border-0 shadow-lg bg-light h-100">
                 <div class="card-body">
-                    <h2 class="text-center" style="color: #800000;">Información de Contacto</h2>
-                    <p class="text-justify" style="color: #333;"><strong>Dirección:</strong> Calle Falsa 123, Ciudad, País</p>
-                    <p class="text-justify" style="color: #333;"><strong>Teléfono:</strong> +123 456 7890</p>
-                    <p class="text-justify" style="color: #333;"><strong>Email:</strong> contacto@biblioteca.com</p>
-                    <p class="text-justify" style="color: #333;">También puedes encontrarnos en nuestras redes sociales:</p>
+                    <h2 class="text-center">Información de Contacto</h2>
+                    <p class="text-justify"><strong>Dirección:</strong> Calle Falsa 123, Ciudad, País</p>
+                    <p class="text-justify"><strong>Teléfono:</strong> +123 456 7890</p>
+                    <p class="text-justify"><strong>Email:</strong> contacto@biblioteca.com</p>
+                    <p class="text-justify">También puedes encontrarnos en nuestras redes sociales:</p>
                     <div class="text-center">
                         <!-- Añadir URLs de redes sociales dentro de href -->
                         <a href="#" class="btn btn-social-icon btn-facebook" aria-label="Facebook">
@@ -69,7 +69,7 @@
 
 <style>
     .header-section {
-        background-color: #f8f9fa;
+        background-color: transparent;
         padding: 40px 0;
     }
     .card {

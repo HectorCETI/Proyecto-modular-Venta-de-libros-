@@ -1,32 +1,32 @@
 <?php include("template/cabecera_publica.php"); ?>
 
 <div class="header-section text-center mt-4 mb-4">
-    <h1 class="display-4" style="color: #800000;">Sobre Nosotros</h1>
+    <h1 class="display-4">Sobre Nosotros</h1>
 </div>
 
 <div class="container content-section">
     <div class="row mb-4">
         <div class="col-md-12 mb-4">
-            <div class="card border-0 shadow-lg bg-light h-100">
+            <div class="card border-0 shadow-lg h-100 bg-light">
                 <div class="card-body">
-                    <h2 class="text-center" style="color: #800000;">Nuestra Historia</h2>
-                    <p class="text-justify" style="color: #333;">Desde nuestra fundación, hemos estado dedicados a proporcionar una colección diversa y extensa de libros para todos los gustos. Nuestra misión es fomentar el amor por la lectura y ofrecer un espacio donde los lectores puedan explorar y descubrir nuevas obras.</p>
+                    <h2 class="text-center">Nuestra Historia</h2>
+                    <p class="text-justify">Desde nuestra fundación, hemos estado dedicados a proporcionar una colección diversa y extensa de libros para todos los gustos. Nuestra misión es fomentar el amor por la lectura y ofrecer un espacio donde los lectores puedan explorar y descubrir nuevas obras.</p>
                 </div>
             </div>
         </div>
         <div class="col-md-6 mb-4">
-            <div class="card border-0 shadow-lg bg-light h-100">
+            <div class="card border-0 shadow-lg h-100 bg-light">
                 <div class="card-body">
-                    <h2 class="text-center" style="color: #800000;">Nuestra Misión</h2>
-                    <p class="text-justify" style="color: #333;">Creemos en el poder transformador de los libros y estamos comprometidos a hacer que la lectura sea accesible para todos. Nuestra misión es crear una comunidad de lectores apasionados y ofrecer recursos de alta calidad que inspiren, eduquen y entretengan.</p>
+                    <h2 class="text-center">Nuestra Misión</h2>
+                    <p class="text-justify">Creemos en el poder transformador de los libros y estamos comprometidos a hacer que la lectura sea accesible para todos. Nuestra misión es crear una comunidad de lectores apasionados y ofrecer recursos de alta calidad que inspiren, eduquen y entretengan.</p>
                 </div>
             </div>
         </div>
         <div class="col-md-6 mb-4">
-            <div class="card border-0 shadow-lg bg-light h-100">
+            <div class="card border-0 shadow-lg h-100 bg-light">
                 <div class="card-body">
-                    <h2 class="text-center" style="color: #800000;">Nuestros Valores</h2>
-                    <p class="text-justify" style="color: #333;">Nos guiamos por valores de integridad, inclusión y excelencia. Nos esforzamos por ofrecer un servicio excepcional y por mantener una colección que refleje la diversidad y riqueza de la experiencia humana.</p>
+                    <h2 class="text-center">Nuestros Valores</h2>
+                    <p class="text-justify">Nos guiamos por valores de integridad, inclusión y excelencia. Nos esforzamos por ofrecer un servicio excepcional y por mantener una colección que refleje la diversidad y riqueza de la experiencia humana.</p>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
 
 <style>
     .header-section {
-        background-color: #f8f9fa;
+        background-color: transparent;
         padding: 40px 0;
     }
     .card {
@@ -73,5 +73,8 @@
     }
     .shadow-lg {
         box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+    body {
+        background-color: #f0f0f0; /* Gris claro */
     }
 </style>
