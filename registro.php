@@ -2,7 +2,7 @@
 include("template/cabecera_publica.php");
 include("administrador/config/bd.php");
 
-require 'vendor/autoload.php'; // Asegúrate de que esta línea apunta al archivo autoload.php
+require 'vendor/autoload.php'; 
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -53,8 +53,8 @@ if ($_POST) {
         $mensaje .= "El correo institucional ya está en uso. ";
     }
 
-    if (!preg_match('/^[A-Z0-9_]{5,12}$/', $usuario)) {
-        $mensaje = "El nombre de usuario debe tener entre 5 y 12 caracteres, y solo puede contener letras, números y guiones bajos.";
+    if (!preg_match('/^[A-Z0-9_]{6,12}$/', $usuario)) {
+        $mensaje = "El nombre de usuario debe tener entre 6 y 12 caracteres, y solo puede contener letras, números y guiones bajos.";
     } elseif ($usuarioExistente) {
         // No hacer nada, el mensaje ya está agregado
     } elseif (!preg_match('/^\d{10}$/', $telefono)) {

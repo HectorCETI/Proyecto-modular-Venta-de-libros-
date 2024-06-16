@@ -7,8 +7,10 @@ require 'vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-$mensaje = "";
+$mensaje_activacion = "";
+$mensaje_reenvio = "";
 $usuario = isset($_SESSION['usuarioPendiente']) ? $_SESSION['usuarioPendiente'] : '';
+$correo_institucional = isset($_SESSION['correoPendiente']) ? $_SESSION['correoPendiente'] : '';
 
 function generarCodigoActivacion($longitud = 6) {
     return strtoupper(substr(md5(time()), 0, $longitud));
@@ -46,40 +48,42 @@ function enviarCorreoActivacion($usuario, $nombre, $correo_institucional, $codig
 
 if ($_POST) {
     if (isset($_POST['reenviar'])) {
-        $usuario = strtoupper($_POST['usuario']);
-        $verificarUsuario = $conexion->prepare("SELECT * FROM usuarios WHERE usuario=:usuario");
-        $verificarUsuario->bindParam(':usuario', $usuario);
-        $verificarUsuario->execute();
-        $usuarioData = $verificarUsuario->fetch(PDO::FETCH_ASSOC);
+        $correo_institucional = strtolower($_POST['correo_institucional']);
+        $verificarCorreo = $conexion->prepare("SELECT * FROM usuarios WHERE correo_institucional=:correo_institucional");
+        $verificarCorreo->bindParam(':correo_institucional', $correo_institucional);
+        $verificarCorreo->execute();
+        $usuarioData = $verificarCorreo->fetch(PDO::FETCH_ASSOC);
 
         if ($usuarioData) {
             if ($usuarioData['activado'] == 1) {
-                $mensaje = "El usuario ya está activado.";
+                $mensaje_reenvio = "El usuario ya está activado.";
             } else {
                 $ultimoReenvio = $usuarioData['ultimo_reenvio'];
                 $tiempoActual = time();
                 $tiempoEspera = 180; // 3 minutos
 
                 if ($ultimoReenvio && ($tiempoActual - $ultimoReenvio < $tiempoEspera)) {
-                    $mensaje = "Debes esperar antes de solicitar otro reenvío.";
+                    $_SESSION['ultimoReenvio'] = $ultimoReenvio; // Guardar el tiempo del último reenvío en la sesión
+                    $mensaje_reenvio = "Debes esperar antes de solicitar otro reenvío.";
                 } else {
                     $nombre = $usuarioData['nombre'];
-                    $correo_institucional = $usuarioData['correo_institucional'];
+                    $usuario = $usuarioData['usuario'];
                     $codigo_activacion = generarCodigoActivacion();
 
-                    $actualizarCodigo = $conexion->prepare("UPDATE usuarios SET codigo_activacion=:codigo_activacion, ultimo_reenvio=:ultimo_reenvio WHERE usuario=:usuario");
+                    $actualizarCodigo = $conexion->prepare("UPDATE usuarios SET codigo_activacion=:codigo_activacion, ultimo_reenvio=:ultimo_reenvio WHERE correo_institucional=:correo_institucional");
                     $actualizarCodigo->bindParam(':codigo_activacion', $codigo_activacion);
                     $actualizarCodigo->bindParam(':ultimo_reenvio', $tiempoActual);
-                    $actualizarCodigo->bindParam(':usuario', $usuario);
+                    $actualizarCodigo->bindParam(':correo_institucional', $correo_institucional);
                     $actualizarCodigo->execute();
 
-                    $mensaje = enviarCorreoActivacion($usuario, $nombre, $correo_institucional, $codigo_activacion);
+                    $mensaje_reenvio = enviarCorreoActivacion($usuario, $nombre, $correo_institucional, $codigo_activacion);
                     $_SESSION['usuarioPendiente'] = $usuario;
+                    $_SESSION['correoPendiente'] = $correo_institucional;
                     $_SESSION['ultimoReenvio'] = $tiempoActual;
                 }
             }
         } else {
-            $mensaje = "Usuario no encontrado.";
+            $mensaje_reenvio = "Correo no encontrado.";
         }
     } else {
         $usuario = strtoupper($_POST['usuario']);
@@ -94,10 +98,12 @@ if ($_POST) {
             $activarUsuario = $conexion->prepare("UPDATE usuarios SET activado=1, codigo_activacion=NULL WHERE usuario=:usuario");
             $activarUsuario->bindParam(':usuario', $usuario);
             $activarUsuario->execute();
-            $mensaje = "Activación exitosa. Ahora puedes iniciar sesión.";
+            $mensaje_activacion = "Activación exitosa. Ahora puedes iniciar sesión.";
             unset($_SESSION['usuarioPendiente']);
+            unset($_SESSION['correoPendiente']);
+            unset($_SESSION['ultimoReenvio']);
         } else {
-            $mensaje = "Código de activación incorrecto.";
+            $mensaje_activacion = "Código de activación incorrecto.";
         }
     }
 }
@@ -109,9 +115,9 @@ if ($_POST) {
             <div class="card border-0 shadow-lg mb-4">
                 <div class="card-body">
                     <h3 class="card-title text-center" style="color: #800000;">Activar Cuenta</h3>
-                    <?php if ($mensaje) { ?>
+                    <?php if ($mensaje_activacion) { ?>
                         <div class="alert alert-info" role="alert">
-                            <?php echo $mensaje; ?>
+                            <?php echo $mensaje_activacion; ?>
                         </div>
                     <?php } ?>
                     <form method="POST">
@@ -130,10 +136,15 @@ if ($_POST) {
             <div class="card border-0 shadow-lg">
                 <div class="card-body">
                     <h3 class="card-title text-center" style="color: #800000;">Reenviar Código de Activación</h3>
+                    <?php if ($mensaje_reenvio) { ?>
+                        <div class="alert alert-info" role="alert">
+                            <?php echo $mensaje_reenvio; ?>
+                        </div>
+                    <?php } ?>
                     <form method="POST">
                         <div class="form-group">
-                            <label for="usuarioReenvio" style="color: #333;">Usuario:</label>
-                            <input type="text" class="form-control" id="usuarioReenvio" name="usuario" placeholder="Ingrese su usuario para reenvío" required>
+                            <label for="correo_institucional" style="color: #333;">Correo Institucional:</label>
+                            <input type="email" class="form-control" id="correo_institucional" name="correo_institucional" placeholder="Ingrese su correo institucional para reenvío" value="<?php echo $correo_institucional; ?>" required>
                         </div>
                         <button type="submit" name="reenviar" class="btn btn-secondary btn-block" id="reenviarCorreo" style="background-color: #800000; border-color: #800000;">Reenviar Correo de Activación</button>
                         <small id="tiempoRestante" class="form-text text-muted text-center mt-2"></small>
@@ -152,19 +163,9 @@ if ($_POST) {
         var reenviarBtn = document.getElementById('reenviarCorreo');
         var tiempoRestante = document.getElementById('tiempoRestante');
         var tiempoEspera = 180; // 3 minutos en segundos
-        var usuarioReenvio = document.getElementById('usuarioReenvio').value;
+        var correoReenvio = document.getElementById('correo_institucional').value;
         
-        var ultimoReenvio = <?php
-        if (!empty($usuario)) {
-            $verificarUsuario = $conexion->prepare("SELECT ultimo_reenvio FROM usuarios WHERE usuario=:usuario");
-            $verificarUsuario->bindParam(':usuario', $usuario);
-            $verificarUsuario->execute();
-            $usuarioData = $verificarUsuario->fetch(PDO::FETCH_ASSOC);
-            echo $usuarioData ? $usuarioData['ultimo_reenvio'] : 0;
-        } else {
-            echo 0;
-        }
-        ?>;
+        var ultimoReenvio = <?php echo isset($_SESSION['ultimoReenvio']) ? $_SESSION['ultimoReenvio'] : 0; ?>;
         var ahora = Math.floor(Date.now() / 1000);
 
         if (ultimoReenvio && (ahora - ultimoReenvio < tiempoEspera)) {

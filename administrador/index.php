@@ -3,7 +3,7 @@ session_start();
 include("config/bd.php");
 
 if ($_POST) {
-    $usuario = $_POST['usuario'];
+    $usuario = strtoupper($_POST['usuario']);
     $contrasena = $_POST['contrasena'];
 
     // Verificar si el usuario está bloqueado antes de procesar el intento de inicio de sesión
@@ -93,15 +93,16 @@ if ($_POST) {
                             <?php echo $mensaje; ?>
                         </div>
                     <?php } ?>
-                    <form method="POST" id="login-form">
+                    <form method="POST" id="login-form" onsubmit="return validarFormulario()">
                         <div class="form-group">
                             <label for="usuario" style="color: #333;">Usuario:</label>
-                            <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese su usuario">
+                            <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese su usuario" required>
+                            <small id="usuarioAlert" class="form-text text-danger" style="display: none;">El nombre de usuario debe tener entre 5 y 12 caracteres, y solo puede contener letras, números y guiones bajos.</small>
                         </div>
                         <div class="form-group">
                             <label for="contrasena" style="color: #333;">Contraseña:</label>
                             <div class="input-group">
-                                <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña">
+                                <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-outline-secondary" id="toggle-password" aria-label="Mostrar u ocultar contraseña">
                                         <i class="bi bi-eye" id="toggle-icon"></i>
@@ -120,7 +121,6 @@ if ($_POST) {
 <?php include("../template/pie.php"); ?>
 
 <!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGaS3ukQmTktG8f5DpiUibVx3" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIyFEYeDjAxZw8++PpRtW0uChFfYCAaMSFZcUOLO" crossorigin="anonymous"></script>
@@ -137,6 +137,25 @@ if ($_POST) {
             icon.classList.remove('bi-eye-slash');
             icon.classList.add('bi-eye');
         }
+    });
+
+    function validarFormulario() {
+        var usuario = document.getElementById('usuario').value;
+        var valido = true;
+
+        // Validar usuario
+        if (!/^[A-Z0-9_]{5,12}$/.test(usuario)) {
+            document.getElementById('usuarioAlert').style.display = 'block';
+            valido = false;
+        } else {
+            document.getElementById('usuarioAlert').style.display = 'none';
+        }
+
+        return valido;
+    }
+
+    document.getElementById('usuario').addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
     });
 
     // Mostrar el tiempo restante de bloqueo
