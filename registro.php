@@ -2,10 +2,19 @@
 include("template/cabecera_publica.php");
 include("administrador/config/bd.php");
 
+require 'vendor/autoload.php'; // Asegúrate de que esta línea apunta al archivo autoload.php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 $mensaje = "";
 $usuarioExistente = false;
 $telefonoExistente = false;
 $correoExistente = false;
+
+function generarCodigoActivacion($longitud = 6) {
+    return strtoupper(substr(md5(time()), 0, $longitud));
+}
 
 if ($_POST) {
     $usuario = strtoupper($_POST['usuario']);
@@ -15,6 +24,7 @@ if ($_POST) {
     $correo_institucional = strtolower($_POST['correo_institucional']) . strtolower($_POST['correo_dominio']);
     $telefono = $_POST['telefono'];
     $centro_universitario = $_POST['centro_universitario'];
+    $codigo_activacion = generarCodigoActivacion();
 
     // Verificar si el nombre de usuario ya existe
     $verificarUsuario = $conexion->prepare("SELECT * FROM usuarios WHERE usuario=:usuario");
@@ -60,7 +70,7 @@ if ($_POST) {
         $contrasenaCifrada = password_hash($contrasena, PASSWORD_BCRYPT);
 
         // Insertar el nuevo usuario en la base de datos
-        $sentenciaSQL = $conexion->prepare("INSERT INTO usuarios (usuario, contrasena, nombre, apellido, correo_institucional, telefono, centro_universitario) VALUES (:usuario, :contrasena, :nombre, :apellido, :correo_institucional, :telefono, :centro_universitario)");
+        $sentenciaSQL = $conexion->prepare("INSERT INTO usuarios (usuario, contrasena, nombre, apellido, correo_institucional, telefono, centro_universitario, codigo_activacion, activado) VALUES (:usuario, :contrasena, :nombre, :apellido, :correo_institucional, :telefono, :centro_universitario, :codigo_activacion, 0)");
         $sentenciaSQL->bindParam(':usuario', $usuario);
         $sentenciaSQL->bindParam(':contrasena', $contrasenaCifrada);
         $sentenciaSQL->bindParam(':nombre', $nombre);
@@ -68,9 +78,38 @@ if ($_POST) {
         $sentenciaSQL->bindParam(':correo_institucional', $correo_institucional);
         $sentenciaSQL->bindParam(':telefono', $telefono);
         $sentenciaSQL->bindParam(':centro_universitario', $centro_universitario);
+        $sentenciaSQL->bindParam(':codigo_activacion', $codigo_activacion);
         $sentenciaSQL->execute();
 
-        $mensaje = "Registro exitoso. Ahora puedes iniciar sesión.";
+        // Enviar correo de activación
+        $mail = new PHPMailer(true);
+
+        try {
+            // Configuración del servidor
+            $mail->isSMTP();
+            $mail->Host = 'mail.smtp2go.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'hector.alvarez2922@alumnos.udg.mx';
+            $mail->Password = 'YZYfV2q9aqKI1Wtz';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 2525;
+
+            // Remitente y destinatarios
+            $mail->setFrom('hector.alvarez2922@alumnos.udg.mx', 'UniBooks UDG');
+            $mail->addAddress($correo_institucional);
+
+            // Contenido del correo
+            $mail->isHTML(true);
+            $mail->Subject = 'Activacion de cuenta UniBooks UDG';
+            $mail->Body    = "Hola $nombre,<br><br>Gracias por registrarte. Tu código de activación es: <b>$codigo_activacion</b><br><br>Por favor, ingresa este código en la página de activación para activar tu cuenta.<br><br>Saludos,<br>Equipo de UniBooks UDG";
+            $mail->AltBody = "Hola $nombre,\n\nGracias por registrarte. Tu código de activación es: $codigo_activacion\n\nPor favor, ingresa este código en la página de activación para activar tu cuenta.\n\nSaludos,\nEquipo de UniBooks UDG";
+
+            $mail->send();
+            $mensaje = "Registro exitoso. Se ha enviado un código de activación a tu correo institucional.";
+        } catch (Exception $e) {
+            $mensaje = "Registro exitoso. No se pudo enviar el correo de activación. Por favor, intenta de nuevo más tarde. Error: {$mail->ErrorInfo}";
+        }
+
         // Limpiar formulario
         $_POST = array();
     }

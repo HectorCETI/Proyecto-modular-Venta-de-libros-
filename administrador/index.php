@@ -44,29 +44,36 @@ if ($_POST) {
             $sentenciaSQL->execute();
             $usuarioData = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
 
-            if ($usuarioData && password_verify($contrasena, $usuarioData['contrasena'])) {
-                $_SESSION['usuario'] = $usuarioData['usuario'];
-                $_SESSION['usuarioID'] = $usuarioData['id']; // Agregar esto para almacenar el usuarioID en la sesión
-                header('Location: ../usuarios/inicio.php');
-                exit;
-            } else {
-                // Registrar el intento fallido
-                $sentenciaSQL = $conexion->prepare("INSERT INTO login_attempts (usuario, bloqueo_until) VALUES (:usuario, NULL)");
-                $sentenciaSQL->bindParam(':usuario', $usuario);
-                $sentenciaSQL->execute();
-
-                $mensaje = "Usuario o contraseña incorrectos";
-                $intentos++;
-                if ($intentos >= 3) {
-                    $bloqueoTiempo = 60; // 1 minuto de bloqueo
-                    $bloqueo_until = date("Y-m-d H:i:s", time() + $bloqueoTiempo);
-                    $updateSQL = $conexion->prepare("UPDATE login_attempts SET bloqueo_until=:bloqueo_until WHERE usuario=:usuario ORDER BY attempt_time DESC LIMIT 1");
-                    $updateSQL->bindParam(':bloqueo_until', $bloqueo_until);
-                    $updateSQL->bindParam(':usuario', $usuario);
-                    $updateSQL->execute();
-
-                    $mensaje = "Acceso bloqueado por <span id='contador-bloqueo'>" . gmdate("i:s", $bloqueoTiempo) . "</span>.";
+            if ($usuarioData) {
+                if (!$usuarioData['activado']) {
+                    // Redirigir a la página de activación si la cuenta no está activada
+                    $_SESSION['usuarioPendiente'] = $usuarioData['usuario'];
+                    header('Location: ../activar.php');
+                    exit;
+                } elseif (password_verify($contrasena, $usuarioData['contrasena'])) {
+                    $_SESSION['usuario'] = $usuarioData['usuario'];
+                    $_SESSION['usuarioID'] = $usuarioData['id']; // Agregar esto para almacenar el usuarioID en la sesión
+                    header('Location: ../usuarios/inicio.php');
+                    exit;
                 }
+            }
+
+            // Registrar el intento fallido
+            $sentenciaSQL = $conexion->prepare("INSERT INTO login_attempts (usuario, bloqueo_until) VALUES (:usuario, NULL)");
+            $sentenciaSQL->bindParam(':usuario', $usuario);
+            $sentenciaSQL->execute();
+
+            $mensaje = "Usuario o contraseña incorrectos";
+            $intentos++;
+            if ($intentos >= 3) {
+                $bloqueoTiempo = 60; // 1 minuto de bloqueo
+                $bloqueo_until = date("Y-m-d H:i:s", time() + $bloqueoTiempo);
+                $updateSQL = $conexion->prepare("UPDATE login_attempts SET bloqueo_until=:bloqueo_until WHERE usuario=:usuario ORDER BY attempt_time DESC LIMIT 1");
+                $updateSQL->bindParam(':bloqueo_until', $bloqueo_until);
+                $updateSQL->bindParam(':usuario', $usuario);
+                $updateSQL->execute();
+
+                $mensaje = "Acceso bloqueado por <span id='contador-bloqueo'>" . gmdate("i:s", $bloqueoTiempo) . "</span>.";
             }
         }
     }
@@ -115,7 +122,7 @@ if ($_POST) {
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJb8BlufPV5IoM9xg4UibcDIX2iEGg8Lfi7IJ1x9tZT8Bv3I" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGaS3ukQmTktG8f5DpiUibVx3" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIyFEYeDjAxZw8++PpRtW0uChFfYCAaMSFZcUOLO" crossorigin="anonymous"></script>
 <script>
     document.getElementById('toggle-password').addEventListener('click', function() {
