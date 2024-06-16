@@ -105,7 +105,7 @@ if ($_POST) {
             $mail->AltBody = "Hola $nombre,\n\nGracias por registrarte. Tu código de activación es: $codigo_activacion\n\nPor favor, ingresa este código en la página de activación para activar tu cuenta.\n\nSaludos,\nEquipo de UniBooks UDG";
 
             $mail->send();
-            $mensaje = "Registro exitoso. Se ha enviado un código de activación a tu correo institucional.";
+            $mensaje = "Registro exitoso. Se ha enviado un código de activación a tu correo institucional. Por favor, revisa también la carpeta de spam o correos no deseados.";
         } catch (Exception $e) {
             $mensaje = "Registro exitoso. No se pudo enviar el correo de activación. Por favor, intenta de nuevo más tarde. Error: {$mail->ErrorInfo}";
         }

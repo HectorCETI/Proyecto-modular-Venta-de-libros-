@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-06-2024 a las 22:51:19
+-- Tiempo de generación: 16-06-2024 a las 09:34:41
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -75,7 +75,8 @@ INSERT INTO `libros` (`id`, `nombre`, `titulo`, `autor`, `descripcion`, `imagen`
 (29, '3333333', '', '', '3333', '1717785993_Level 1 - PHP.png', 33.00, 30, 0),
 (30, '44444', '', '', '4444', '1717822092_Aprendizaje Python.jpg', 44.00, 49, 0),
 (33, '11111 ssss', '', '', 'ssssss', '1717872051_Novela JAVA.jpg', 135.00, 50, 2),
-(34, '11111 ddddd', '', '', 'W,L5kem*&w5MA/Xb%(WtC/bVNFwk-HW/1bRhkA!@XkAdepQV=RMeD)F', '1717872132_BashGrow.png', 0.00, 55, 3);
+(34, '11111 ddddd', '', '', 'W,L5kem*&w5MA/Xb%(WtC/bVNFwk-HW/1bRhkA!@XkAdepQV=RMeD)F', '1717872132_BashGrow.png', 0.00, 55, 3),
+(36, 'Prueba HectorCETI', '', '', 'Esta es una prueba de libro que se realizo desde la cuenta de Hectorceti para comprobar los funcionamientos de manera correcta', '1718513151_Aprendizaje Python.jpg', 200.00, 0, 19);
 
 -- --------------------------------------------------------
 
@@ -855,7 +856,9 @@ INSERT INTO `libro_busquedas` (`id`, `libro_id`, `criterio`, `fecha`, `precio_mi
 (781, 17, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
 (782, 23, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
 (783, 19, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
-(784, 20, 'nombre', '2024-06-04 17:28:21', NULL, NULL);
+(784, 20, 'nombre', '2024-06-04 17:28:21', NULL, NULL),
+(785, 34, 'id', '2024-06-16 02:36:56', NULL, NULL),
+(786, 4, 'nombre', '2024-06-16 02:37:13', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -914,7 +917,17 @@ INSERT INTO `libro_clicks` (`id`, `libro_id`, `timestamp`) VALUES
 (52, 28, '2024-06-08 04:48:36'),
 (53, 28, '2024-06-08 04:48:37'),
 (54, 30, '2024-06-10 19:30:12'),
-(55, 34, '2024-06-10 19:34:57');
+(55, 34, '2024-06-10 19:34:57'),
+(56, 1, '2024-06-16 02:33:44'),
+(57, 1, '2024-06-16 02:33:47'),
+(58, 34, '2024-06-16 02:36:19'),
+(59, 34, '2024-06-16 02:36:20'),
+(60, 34, '2024-06-16 02:36:21'),
+(61, 34, '2024-06-16 02:36:24'),
+(62, 34, '2024-06-16 02:36:35'),
+(63, 34, '2024-06-16 02:36:36'),
+(64, 4, '2024-06-16 02:37:28'),
+(65, 36, '2024-06-16 04:46:04');
 
 -- --------------------------------------------------------
 
@@ -969,7 +982,9 @@ INSERT INTO `login_attempts` (`id`, `usuario`, `attempt_time`, `bloqueo_until`) 
 (98, 'a', '2024-06-06 19:46:04', NULL),
 (99, 'a', '2024-06-07 18:11:52', NULL),
 (100, 'S', '2024-06-07 18:42:59', NULL),
-(101, 'admin', '2024-06-14 18:22:02', NULL);
+(101, 'admin', '2024-06-14 18:22:02', NULL),
+(102, 'A', '2024-06-16 03:19:37', NULL),
+(103, 'S', '2024-06-16 06:31:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -986,23 +1001,25 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(50) NOT NULL,
   `telefono` varchar(10) NOT NULL,
   `centro_universitario` varchar(255) DEFAULT NULL,
-  `verificacion` varchar(255) DEFAULT NULL
+  `activado` tinyint(1) DEFAULT 0,
+  `codigo_activacion` varchar(255) DEFAULT NULL,
+  `ultimo_reenvio` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `usuario`, `contrasena`, `nombre`, `correo_institucional`, `apellido`, `telefono`, `centro_universitario`, `verificacion`) VALUES
-(2, 's', '$2y$10$xEUDphj774HlMzMSbl81NOV4eKmQEtH5EHzGcrVJY3p5s2T9BFije', 's', '', '', '', NULL, NULL),
-(3, 'd', '$2y$10$89xqPSPLEai9Hv/2NfLUK.MUs3kT.VW.QrB7pd4CaqOyJCaDLJILW', 'd', '', '', '', NULL, NULL),
-(5, 'DIANA', '$2y$10$omruEW/W46Iw.WoBuYMY6ucSWHbqTKNOFlcHavBcEvrzrsupH19Nm', 'DIANA', 'hola@alumnos.udg.mx', 'DIANA', '3333333333', 'CUCEI', NULL),
-(6, 'HECTORCETI', '$2y$10$OF7l2j/BPLCK4CQbBaaxGuo6ZqrZb4vODkcyLBeFRY8NYtIMF/1nS', 'HECTOR', 'hector.alvarez2922@alumnos.udg.mx', 'ALVAREZ', '3331141650', 'CUCEI', NULL),
-(7, 'PRUEBA1', '$2y$10$u3YaI8SH8uswDzFDx59O1u0/rBR.5MrvkVxj/hNz3AFBGplol0j9K', 'SISTEMAS', 'sistemas@academicos.udg.mx', 'SISTEMAS', '3331141650', 'CUCEI', NULL),
-(8, 'ASDADSASASD', '$2y$10$iri5SOMKmd.CBGWLts7ULeSzvijHHD5rC6jf7BUHcFGR8jcB.m.Ey', 'SSDDS', 'asd@academicos.udg.mx', 'ADDASD', '3331141650', 'CUCEI', NULL),
-(9, 'ASDASDASDSA', '$2y$10$tmW5OXB2RNu4ITT.62z5reoOZh.8NEt3gvwV3QW4Hy5RocTOPXdc6', 'PYTH', 'holasdasasssda.w2112@academicos.udg.mx', 'ADMIN', '3333333333', 'CUALTOS', NULL),
-(10, 'HECTORCETI2', '$2y$10$LUj3pynwvva.zB4OlRW0Oe7fOjVkVr0c9ouSbalUrKQQg1q0AN7YK', 'PYTH', 'hector.alvarez29223@academicos.udg.mx', 'ADMIN', '3331141651', 'CUCEI', NULL),
-(11, 'HECTORCETI3', '$2y$10$rUu6AFNfGyqDFPFvtNlRHeTdJJ6C4geZxNUe1vt4abiqMwW1gbBJy', 'PYTHON', 'hector.alvarez2922@academicos.udg.mx', 'ALVAREZ', '3333333331', 'Prepa 12', NULL);
+INSERT INTO `usuarios` (`id`, `usuario`, `contrasena`, `nombre`, `correo_institucional`, `apellido`, `telefono`, `centro_universitario`, `activado`, `codigo_activacion`, `ultimo_reenvio`) VALUES
+(2, 's', '$2y$10$xEUDphj774HlMzMSbl81NOV4eKmQEtH5EHzGcrVJY3p5s2T9BFije', 's', '', '', '', NULL, 1, '6D8BE5', 1718521979),
+(3, 'd', '$2y$10$89xqPSPLEai9Hv/2NfLUK.MUs3kT.VW.QrB7pd4CaqOyJCaDLJILW', 'd', '', '', '', NULL, 0, 'C23909', 1718522654),
+(5, 'DIANA', '$2y$10$omruEW/W46Iw.WoBuYMY6ucSWHbqTKNOFlcHavBcEvrzrsupH19Nm', 'DIANA', 'hola@alumnos.udg.mx', 'DIANA', '3333333333', 'CUCEI', 0, NULL, NULL),
+(7, 'PRUEBA1', '$2y$10$u3YaI8SH8uswDzFDx59O1u0/rBR.5MrvkVxj/hNz3AFBGplol0j9K', 'SISTEMAS', 'sistemas@academicos.udg.mx', 'SISTEMAS', '3331141650', 'CUCEI', 0, NULL, NULL),
+(8, 'ASDADSASASD', '$2y$10$iri5SOMKmd.CBGWLts7ULeSzvijHHD5rC6jf7BUHcFGR8jcB.m.Ey', 'SSDDS', 'asd@academicos.udg.mx', 'ADDASD', '3331141650', 'CUCEI', 0, NULL, NULL),
+(9, 'ASDASDASDSA', '$2y$10$tmW5OXB2RNu4ITT.62z5reoOZh.8NEt3gvwV3QW4Hy5RocTOPXdc6', 'PYTH', 'holasdasasssda.w2112@academicos.udg.mx', 'ADMIN', '3333333333', 'CUALTOS', 0, NULL, NULL),
+(10, 'HECTORCETI2', '$2y$10$LUj3pynwvva.zB4OlRW0Oe7fOjVkVr0c9ouSbalUrKQQg1q0AN7YK', 'PYTH', 'hector.alvarez29223@academicos.udg.mx', 'ADMIN', '3331141652', 'CUCEI', 0, NULL, NULL),
+(11, 'HECTORCETI3', '$2y$10$rUu6AFNfGyqDFPFvtNlRHeTdJJ6C4geZxNUe1vt4abiqMwW1gbBJy', 'PYTHON', 'hector.alvarez2922@academicos.udg.mx', 'ALVAREZ', '3333333331', 'Prepa 12', 0, NULL, NULL),
+(19, 'HECTORCETI', '$2y$10$ejUdUagABmD69cuTRW8Co.OrwfPniyqZ3.BNxfGgE0F4yL82GLGNu', 'HECTOR', 'hector.alvarez2922@alumnos.udg.mx', 'ALVAREZ', '3333333339', 'Prepa Regional de Ameca', 1, NULL, 1718523058);
 
 --
 -- Índices para tablas volcadas
@@ -1059,31 +1076,31 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `libro_busquedas`
 --
 ALTER TABLE `libro_busquedas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=785;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=787;
 
 --
 -- AUTO_INCREMENT de la tabla `libro_clicks`
 --
 ALTER TABLE `libro_clicks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT de la tabla `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
